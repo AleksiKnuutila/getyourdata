@@ -6,6 +6,11 @@ from django.db import models
 from django.db.models import Avg
 from django.utils.translation import ugettext_lazy as _
 
+from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.core.validators import RegexValidator
+from model_utils.fields import AutoCreatedField, AutoLastModifiedField
+
 from getyourdata.models import BaseModel
 
 
@@ -48,8 +53,48 @@ def form_has_fields(form, fields):
             return False
     return True
 
+def validate_partial_date(value):
+    """
+    Validate a partial date, it can be partial, but it must yet be a valid date.
+    Accepted formats are: YYYY-MM-DD, YYYY-MM, YYYY.
+    2013-22 must rais a ValidationError, as 2013-13-12, or 2013-11-55.
+    """
+    try:
+        datetime.strptime(value, '%Y-%m-%d')
+    except ValueError:
+        try:
+            datetime.strptime(value, '%Y-%m')
+        except ValueError:
+            try:
+                datetime.strptime(value, '%Y')
+            except ValueError:
+                raise ValidationError(u'date seems not to be correct %s' % value)
 
-class OrganizationDetails(BaseModel):
+# This class is from from django-popolo
+class GenericRelatable(models.Model):
+    """
+    An abstract class that provides the possibility of generic relations
+    """
+    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    object_id = models.PositiveIntegerField(blank=True, null=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        abstract = True
+
+# This class is from from django-popolo
+class Timestampable(models.Model):
+    """
+    An abstract base class model that provides self-updating
+    ``created`` and ``modified`` fields.
+    """
+    created_at = AutoCreatedField(_('creation time'))
+    updated_at = AutoLastModifiedField(_('last modification time'))
+
+    class Meta:
+        abstract = True
+
+class OrganizationDetails(Timestampable, BaseModel):
     """
     Base organization details each organization has, whether the model
     is an available organization profile or an edit draft made by an user
@@ -59,6 +104,7 @@ class OrganizationDetails(BaseModel):
         verbose_name=_("Name"))
 
     # Email contact
+    # TODO: handle this as special case of contact_details?
     email_address = models.EmailField(
         max_length=255,
         blank=True,
@@ -69,6 +115,7 @@ class OrganizationDetails(BaseModel):
         verbose_name=_("Email address"))
 
     # Postal contact
+    # TODO: handle this as special case of contact_details?
     address_line_one = models.CharField(
         max_length=255,
         blank=True,
@@ -92,6 +139,43 @@ class OrganizationDetails(BaseModel):
 
     authentication_fields = models.ManyToManyField(
         AuthenticationField, related_name="+")
+
+    summary = models.CharField(_("summary"), max_length=1024, blank=True, help_text=_("A one-line description of an organization"))
+    description = models.TextField(_("biography"), blank=True, help_text=_("An extended description of an organization"))
+
+    data_processing_description = models.TextField(_("nature_of_work"), blank=True, help_text=_("A description of how data controller processes personal data"))
+    freedom_of_information_flag = models.BooleanField(
+        default=False,
+        verbose_name=_("Yes"),
+        help_text=_("Whether organisation has duty to respond to Freedom of Information requests"))
+
+    partial_date_validator = RegexValidator(regex="^[0-9]{4}(-[0-9]{2}){0,2}$", message="Date has wrong format")
+    dpa_registration_start_date = models.CharField(
+        _("start date"), max_length=10, blank=True, null=True,
+        validators=[partial_date_validator, validate_partial_date],
+        help_text=_("The date when the validity of the item starts"),
+    )
+    dpa_registration_end_date = models.CharField(
+        _("end date"), max_length=10, blank=True, null=True,
+        validators=[partial_date_validator, validate_partial_date],
+        help_text=_("The date when the validity of the item ends")
+    )
+
+    # array of items referencing "http://popoloproject.com/schemas/other_name.json#"
+    other_names = GenericRelation('OtherName', help_text="Alternate or former names")
+
+    # array of items referencing "http://popoloproject.com/schemas/identifier.json#"
+    identifiers = GenericRelation('Identifier', help_text="Issued identifiers")
+    classification = models.CharField(_("classification"), max_length=512, blank=True, help_text=_("An organization category, e.g. committee"))
+
+    # array of items referencing "http://popoloproject.com/schemas/link.json#"
+    links = GenericRelation('Link', help_text="URLs to documents about the organization")
+
+    # array of items referencing "http://popoloproject.com/schemas/link.json#"
+    sources = GenericRelation('Source', help_text="URLs to source documents about the organizat    ion")
+
+    # django-popolos definition of area class seems excessive, so just using a string for now
+    jurisdiction =  models.CharField(_("area"), max_length=1024, blank=True, default="United Kingdom", help_text=_("Jurisdiction that organisation is registered in"))
 
     class Meta:
         abstract = True
@@ -170,8 +254,7 @@ class Register(BaseModel):
         help_text=_("The name of the register used by the organization. "
                     "Eg. Customer register"),
         verbose_name=_("Name of the person register"))
-
-    # which organization this register belongs to
+# which organization this register belongs to
     organization = models.ForeignKey(
         Organization,
         related_name='registers',
@@ -223,4 +306,48 @@ class Comment(BaseModel):
 
     def __unicode__(self):
         return 'Comment ' + unicode(self.organization)
+
+class OtherName(GenericRelatable, models.Model):
+    """
+    An alternate or former name
+    see schema at http://popoloproject.com/schemas/name-component.json#
+    """
+    name = models.CharField(_("name"), max_length=512, help_text=_("An alternate or former name"))
+    note = models.CharField(_("note"), max_length=1024, blank=True, help_text=_("A note, e.g. 'Birth name'"))
+
+    def __str__(self):
+        return self.name
+
+class Identifier(GenericRelatable, models.Model):
+    """
+    An issued identifier
+    see schema at http://popoloproject.com/schemas/identifier.json#
+    """
+    identifier = models.CharField(_("identifier"), max_length=512, help_text=_("An issued identifier, e.g. a DUNS number"))
+    scheme = models.CharField(_("scheme"), max_length=128, blank=True, help_text=_("An identifier scheme, e.g. DUNS"))
+
+    def __str__(self):
+        return "{0}: {1}".format(self.scheme, self.identifier)
+
+class Link(GenericRelatable, models.Model):
+    """
+    A URL
+    see schema at http://popoloproject.com/schemas/link.json#
+    """
+    url = models.URLField(_("url"), max_length=350, help_text=_("A URL"))
+    note = models.CharField(_("note"), max_length=512, blank=True, help_text=_("A note, e.g. 'Wikipedia page'"))
+
+    def __str__(self):
+        return self.url
+
+class Source(GenericRelatable, models.Model):
+    """
+    A URL for referring to sources of information
+    see schema at http://popoloproject.com/schemas/link.json#
+    """
+    url = models.URLField(_("url"), help_text=_("A URL"))
+    note = models.CharField(_("note"), max_length=512, blank=True, help_text=_("A note, e.g. 'Parliament website'"))
+
+    def __str__(self):
+        return self.url
 
