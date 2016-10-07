@@ -21,7 +21,9 @@ urlpatterns = i18n_patterns(
 
     url(r'^api/', include('api.urls', namespace="api")),
 
-    url(r'^$', home_views.home, name="home"),
+    # This method uses frontpage stored in CMS
+#    url(r'^$', home_views.home, name="home"),
+    url(r'^$', home_views.frontpage_template, name="home"),
     url(r'^organizations/', include(
         'organization.urls', namespace="organization")),
     url(r'^request/', include('data_request.urls', namespace="data_request")),

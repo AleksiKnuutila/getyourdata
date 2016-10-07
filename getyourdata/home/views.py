@@ -23,6 +23,13 @@ def home(request):
         'content': page.content,
     })
 
+def frontpage_template(request):
+    """
+    Simply displays the front page
+    
+    Alternative method that uses template from filesystem
+    """
+    return render(request, 'home/frontpage.html', {})
 
 def faq(request):
     """
