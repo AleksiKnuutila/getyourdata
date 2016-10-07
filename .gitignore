@@ -63,3 +63,4 @@ target/
 
 # pyCharm IDE
 .idea/
+*.swp
