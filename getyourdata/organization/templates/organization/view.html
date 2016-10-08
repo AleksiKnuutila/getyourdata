@@ -4,136 +4,145 @@
 {% load pipeline %}
 
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="page-header">
-				<h1>{{ organization.name }}</h1>
-			</div>
-		</div>
-	</div>
+  <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading"><span class="glyphicon glyphicon-envelope"></span> {% trans "Send a request" %}</div>
-                <div class="panel-body">
-                <p>{% blocktrans trimmed %}
-                Does this organization have your data? Send them a request.
-                {% endblocktrans %}</p>
-                <a class="btn btn-success" href="{% url "data_request:request_data" organization.id %}">{% trans "Create request" %}</a>
-                </div>
-            </div>
-            <div class="panel panel-info">
-                <div class="panel-heading"><span class="glyphicon glyphicon-wrench"></span> {% trans "Update details" %}</div>
-                <div class="panel-body">
-                <p>{% blocktrans trimmed %}
-                Is this organization's information incorrect or out-of-date? Update the organization profile to keep it up-to-date.
-                {% endblocktrans %}</p>
-                <a class="btn btn-info" href="{% url "organization:edit_organization" organization.id %}">{% trans "Update details" %}</a>
-                </div>
-            </div>
-            <div class="panel panel-warning">
-                <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> {% trans "Feedback" %}</div>
-                <div class="panel-body">
-                <p>{% blocktrans trimmed %}
-                Do you have feedback regarding this organization? Send us feedback using the following form.
-                {% endblocktrans %}</p>
-                <form role="form" action="{% url 'organization:view_organization' organization.id %}" method="post">
-                    {% csrf_token %}
-                    {% if form.rating.errors %}
-                        <ul>
-                        {% for error in form.rating.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% endif %}
-						<input id="id-rating" type="number" name="rating" class="rating" min=0 max=5 step=1 data-size="xs" data-show-caption="false" data-show-clear="false">
-                    <div class="form-group">
-                        {% if form.message.errors %}
-                            <ul>
-                            {% for error in form.message.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                            </ul>
-                        {% endif %}
-                        <textarea style="resize:none" class="form-control" cols="40" id="id_message" name="message" placeholder="{{ form.message.label }}" required="required" rows="10" title>{% if form.message.value %}{{ form.message.value }}{% endif %}</textarea>
-                    </div>
-					{% bootstrap_form captcha_form %}
-                    <input class="btn btn-default" type="submit" value="{% trans 'Leave feedback' %}"/>
-                </form>
-                </div>
-            </div>
+      <div class="col-md-12">
+        <div class="page-header">
+          <h1>{{ organization.name }}</h1>
+          <a href="#foo">
         </div>
-        <div class="col-md-8">
-            <h2>{% trans "Contact information" %}</h2>
-            <hr>
-			{% if not organization.verified %}
-			<div class="alert alert-danger">
-				<strong>{% trans "Unverified contact details" %}</strong><br>
-				{% blocktrans trimmed %}
-				The contact details for this organization have not been verified by a staff member yet.
-				{% endblocktrans %}
-			</div>
-			{% endif %}
-			{% if organization.accepts_mail or organization.accepts_email %}
-	            {% if organization.accepts_mail %}
-	            <p>{% trans "Data requests can be sent in mail to the following address" %}</p>
-	            <p style="font-weight: bold; font-family: monospace;">{% if organization.address_line_one %}{{ organization.address_line_one }}<br>{% endif %}
-	            {% if organization.address_line_two %}{{ organization.address_line_two }}<br>{% endif %}
-	            {% if organization.postal_code %}{{ organization.postal_code }}<br>{% endif %}
-	            {% if organization.country %}{{ organization.country }}<br>{% endif %}</p>
-	            {% endif %}
-				{% if organization.accepts_email and organization.accepts_mail %}
-				<hr>
-				{% endif %}
-	            {% if organization.accepts_email %}
-	            <p>{% trans "Data requests by email are sent to the following email address" %}</p>
-	            {# We shouldn't probably show the email address in plain-text as that makes it very easy for spam bots to crawl for email addresses #}
-	            {# Maybe use a library or a third-party service like one provided by Cloudflare? #}
-	            <a href="{{ organization.email_address }}">{{ organization.email_address }}</a>
-	            {% endif %}
-			{% else %}
-			<p>{% blocktrans trimmed %}
-			This organization does not have any valid contact details at the moment.
-			{% endblocktrans %}</p>
-			{% endif %}
-            <hr>
-            <div class="panel panel-default">
-                <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> {% trans "Received feedback" %}{% if comments %}<span class="pull-right">{% trans 'Average rating' %} {{ organization.average_rating }}/5</span>{% endif %}</div>
-                <div class="panel-body">
-                    {% if comments %}
-                    <table class="table table-striped">
-                        <tbody>
-                        {% for comment in comments %}
-                            <tr>
-                                <td class="col-md-9 comment-message">{{ comment.message }}</td>
-                                <td class="text-right col-md-3">
-                                    <span class="small">{{ comment.created_on|date:"j.n.Y H:i" }}</span>
-                                    <input id="id_rating" type="number" name="rating" class="rating" showCaption="false" min=0 max=5 step=1 data-size="xs" value="{{ comment.rating }}" data-show-caption="false" data-show-clear="false" data-disabled="true">
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    {% if show_pagination%}
-                        {% bootstrap_pagination comments url=pag_url %}
-                    {% endif %}
-                    {% else %}
-                    <p>{% trans 'No feedback yet.' %}</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading"><span class="glyphicon glyphicon-envelope"></span> {% trans "Send a request" %}</div>
+          <div class="panel-body">
+            <p>{% blocktrans trimmed %}
+              Does this organization have your data? Send them a request.
+            {% endblocktrans %}</p>
+            <a class="btn btn-success" href="{% url "data_request:request_data" organization.id %}">{% trans "Create request" %}</a>
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading"><span class="glyphicon glyphicon-wrench"></span> {% trans "Update details" %}</div>
+          <div class="panel-body">
+            <p>{% blocktrans trimmed %}
+              Is this organization's information incorrect or out-of-date? Update the organization profile to keep it up-to-date.
+            {% endblocktrans %}</p>
+            <a class="btn btn-info" href="{% url "organization:edit_organization" organization.id %}">{% trans "Update details" %}</a>
+          </div>
+        </div>
+        <div class="panel panel-warning">
+          <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> {% trans "Feedback" %}</div>
+          <div class="panel-body">
+            <p>{% blocktrans trimmed %}
+              Do you have feedback regarding this organization? Send us feedback using the following form.
+            {% endblocktrans %}</p>
+            <form role="form" action="{% url 'organization:view_organization' organization.id %}" method="post">
+              {% csrf_token %}
+              {% if form.rating.errors %}
+                <ul>
+                  {% for error in form.rating.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              <input id="id-rating" type="number" name="rating" class="rating" min=0 max=5 step=1 data-size="xs" data-show-caption="false" data-show-clear="false">
+              <div class="form-group">
+                {% if form.message.errors %}
+                  <ul>
+                    {% for error in form.message.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+                <textarea style="resize:none" class="form-control" cols="40" id="id_message" name="message" placeholder="{{ form.message.label }}" required="required" rows="10" title>{% if form.message.value %}{{ form.message.value }}{% endif %}</textarea>
+              </div>
+              {% bootstrap_form captcha_form %}
+              <input class="btn btn-default" type="submit" value="{% trans 'Leave feedback' %}"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        {% if organization.has_description %}
+          <h2>{% trans "Description" %}</h2>
+          <hr>
+          <p>
+          {{ organization.plaintext_description }}
+          </p>
+        {% endif %}
+        <hr>
+        <h2>{% trans "Contact information" %}</h2>
+        <hr>
+        {% if not organization.verified %}
+          <div class="alert alert-danger">
+            <strong>{% trans "Unverified contact details" %}</strong><br>
+            {% blocktrans trimmed %}
+              The contact details for this organization have not been verified by a staff member yet.
+            {% endblocktrans %}
+          </div>
+        {% endif %}
+        {% if organization.accepts_mail or organization.accepts_email %}
+          {% if organization.accepts_mail %}
+            <p>{% trans "Data requests can be sent in mail to the following address" %}</p>
+            <p style="font-weight: bold; font-family: monospace;">{% if organization.address_line_one %}{{ organization.address_line_one }}<br>{% endif %}
+            {% if organization.address_line_two %}{{ organization.address_line_two }}<br>{% endif %}
+            {% if organization.postal_code %}{{ organization.postal_code }}<br>{% endif %}
+            {% if organization.country %}{{ organization.country }}<br>{% endif %}</p>
+          {% endif %}
+          {% if organization.accepts_email and organization.accepts_mail %}
+            <hr>
+          {% endif %}
+          {% if organization.accepts_email %}
+            <p>{% trans "Data requests by email are sent to the following email address" %}</p>
+            {# We shouldn't probably show the email address in plain-text as that makes it very easy for spam bots to crawl for email addresses #}
+            {# Maybe use a library or a third-party service like one provided by Cloudflare? #}
+            <a href="{{ organization.email_address }}">{{ organization.email_address }}</a>
+          {% endif %}
+        {% else %}
+          <p>{% blocktrans trimmed %}
+            This organization does not have any valid contact details at the moment.
+          {% endblocktrans %}</p>
+        {% endif %}
+        <hr>
+        <div class="panel panel-default">
+          <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> {% trans "Received feedback" %}{% if comments %}<span class="pull-right">{% trans 'Average rating' %} {{ organization.average_rating }}/5</span>{% endif %}</div>
+          <div class="panel-body">
+            {% if comments %}
+              <table class="table table-striped">
+                <tbody>
+                  {% for comment in comments %}
+                    <tr>
+                      <td class="col-md-9 comment-message">{{ comment.message }}</td>
+                      <td class="text-right col-md-3">
+                        <span class="small">{{ comment.created_on|date:"j.n.Y H:i" }}</span>
+                        <input id="id_rating" type="number" name="rating" class="rating" showCaption="false" min=0 max=5 step=1 data-size="xs" value="{{ comment.rating }}" data-show-caption="false" data-show-clear="false" data-disabled="true">
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% if show_pagination%}
+                {% bootstrap_pagination comments url=pag_url %}
+              {% endif %}
+            {% else %}
+              <p>{% trans 'No feedback yet.' %}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 
 {% block extrahead %}
-{% stylesheet 'star_rating' %}
+  {% stylesheet 'star_rating' %}
 {% endblock %}
 
 
 {% block script %}
-{% javascript 'star_rating' %}
+  {% javascript 'star_rating' %}
 {% endblock %}

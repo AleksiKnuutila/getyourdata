@@ -203,6 +203,18 @@ class OrganizationListingTests(TestCase):
         self.assertEquals(get_amount_of_organizations_on_page(self), 15)
         self.assertEquals(get_amount_of_organizations_on_page(self, 2), 10)
 
+    def test_correct_amount_of_organizations_listed_per_tag(self):
+        for i in range(0, 9):
+            organization = Organization.objects.create(
+                    name="Some organization",
+                    address_line_one="Fake Street 4",
+                    postal_code="00234",
+                    country="Finland",
+                    classification="fakey faketag",
+                    verified=True)
+
+        self.assertEquals(get_amount_of_organizations_on_page(self), 9)
+
 
 @isDjangoTest()
 class OrganizationViewTests(TestCase):
@@ -746,6 +758,7 @@ def is_pagination_shown_in_organization_list(self, number_of_organizations):
 @isSeleniumTest()
 class OrganizationListPaginationShownTests(LiveServerTestCase):
     def setUp(self):
+
         self.auth_field1 = AuthenticationField.objects.create(
             name="some_number",
             title='Some number')

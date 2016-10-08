@@ -16,12 +16,20 @@ from organization.forms import CommentForm
 from organization.utils import get_objects_paginator
 
 
+import pdb
+
 def list_organizations(request):
     """
     View to select organizations for a data request
     """
     page = request.GET.get("page", 1)
-    orgs = Organization.objects.filter(verified=True)
+    tag = request.GET.get("tag")
+    if tag is None:
+        orgs = Organization.objects.filter(verified=True)
+    else:
+        orgs = Organization.objects.filter(verified=True,
+                classification="{0}".format(tag))
+#                classification__iregex=r"\y{0}\y".format(tag))
     orgs_per_page = settings.ORGANIZATIONS_PER_PAGE
     org_ids = request.POST.getlist("org_ids")
 

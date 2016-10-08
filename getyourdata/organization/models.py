@@ -13,6 +13,8 @@ from model_utils.fields import AutoCreatedField, AutoLastModifiedField
 
 from getyourdata.models import BaseModel
 
+import re
+
 
 class AuthenticationField(BaseModel):
     """
@@ -177,6 +179,14 @@ class OrganizationDetails(Timestampable, BaseModel):
     # django-popolos definition of area class seems excessive, so just using a string for now
     jurisdiction =  models.CharField(_("area"), max_length=1024, blank=True, default="United Kingdom", help_text=_("Jurisdiction that organisation is registered in"))
 
+    def plaintext_description(self):
+        """
+        Return organisation description without potential HTML tags and []-style references
+        """
+        desc = re.sub('<[^<]+?>', '', self.description)
+        desc = re.sub('\[[^\[]+?\]', '', desc)
+        return desc
+
     class Meta:
         abstract = True
 
@@ -208,6 +218,10 @@ class Organization(OrganizationDetails):
 
     class Meta:
         ordering = ('-requested_amount', 'name')
+
+    @property
+    def has_description(self):
+        return self.description != ""
 
     @property
     def accepts_email(self):
