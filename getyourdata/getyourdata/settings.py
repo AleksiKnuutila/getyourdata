@@ -322,7 +322,7 @@ TINYMCE_DEFAULT_CONFIG = {
         "th[*],h1[*],h2[*],h3[*],h4[*],h5[*],h6[*],img[*],iframe[*],video[*],audio[*],"
         "object[*],param[*],div[*],small[*],hr[*],style[*],script[*],link[*],strong[*],"
     ),
-    'content_css':  "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css,"
+    'content_css':  "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css,"
                     "/static/css/getyourdata.css,"
                     "/static/css/chosen.min.css,"
                     "/static/css/bootstrap-overrides.css,",
