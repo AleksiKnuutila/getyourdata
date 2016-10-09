@@ -10,6 +10,7 @@ from getyourdata.test import isDjangoTest, isSeleniumTest
 from getyourdata.testcase import LiveServerTestCase
 
 from organization.models import Organization, OrganizationDraft, Comment, AuthenticationField
+from organization.categories import organization_categories
 
 
 def find_element_by_xpath(self, xpath, click_it=False, wait_time=10):
@@ -260,6 +261,20 @@ class OrganizationViewTests(TestCase):
         self.assertContains(
             response,
             "The contact details for this organization have not been verified")
+
+    def test_organization_page_lists_categories(self):
+        organization = Organization.objects.create(
+            name="The Organization",
+            email_address="example@example.com",
+            classification='department',
+            verified=True)
+
+        response = self.client.get(
+            reverse("organization:view_organization", args=(organization.id,)))
+
+        self.assertContains(
+            response,
+            organization_categories["department"]["organisation_type"])
 
 
 @isDjangoTest()

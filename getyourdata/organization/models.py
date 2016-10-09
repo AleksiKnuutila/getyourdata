@@ -5,11 +5,13 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Avg
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.validators import RegexValidator
 from model_utils.fields import AutoCreatedField, AutoLastModifiedField
+from organization.categories import organization_categories
 
 from getyourdata.models import BaseModel
 
@@ -179,9 +181,22 @@ class OrganizationDetails(Timestampable, BaseModel):
     # django-popolos definition of area class seems excessive, so just using a string for now
     jurisdiction =  models.CharField(_("area"), max_length=1024, blank=True, default="United Kingdom", help_text=_("Jurisdiction that organisation is registered in"))
 
-    def plaintext_description(self):
+    # Quick way of doing categories, let's do this properly with classes when
+    # we know what exactly our needs are when tagging organisations.
+    def classifications_with_links(self):
+        """ Parse the organization's tags and return a dict with plaintext names and links to categories.
         """
-        Return organisation description without potential HTML tags and []-style references
+        tags = self.classification.split(' ')
+        categories = []
+        for tag in tags:
+            if tag in organization_categories:
+                categories.append({'category_name': organization_categories[tag]['organisation_type'],
+                    'category_link': reverse('organization:list_organizations', kwargs={'tag':tag})})
+        return categories
+
+
+    def plaintext_description(self):
+        """ Return organisation description without potential HTML tags and []-style references
         """
         desc = re.sub('<[^<]+?>', '', self.description)
         desc = re.sub('\[[^\[]+?\]', '', desc)

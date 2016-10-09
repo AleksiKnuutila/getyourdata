@@ -15,21 +15,16 @@ from organization.forms import NewOrganizationForm, EditOrganizationForm
 from organization.forms import CommentForm
 from organization.utils import get_objects_paginator
 
-
-import pdb
-
-def list_organizations(request):
+def list_organizations(request, tag=""):
     """
     View to select organizations for a data request
     """
     page = request.GET.get("page", 1)
-    tag = request.GET.get("tag")
     if tag is None:
         orgs = Organization.objects.filter(verified=True)
     else:
         orgs = Organization.objects.filter(verified=True,
-                classification="{0}".format(tag))
-#                classification__iregex=r"\y{0}\y".format(tag))
+                classification__iregex=r"\y{0}\y".format(tag))
     orgs_per_page = settings.ORGANIZATIONS_PER_PAGE
     org_ids = request.POST.getlist("org_ids")
 
@@ -72,6 +67,7 @@ def view_organization(request, org_id):
 
     page = request.GET.get("page", 1)
     org_comments = organization.comments(manager='objects').all()
+    org_classification = organization.classifications_with_links()
     comments_per_page = settings.COMMENTS_PER_PAGE
     comments = get_objects_paginator(page, org_comments, comments_per_page)
 
@@ -96,6 +92,7 @@ def view_organization(request, org_id):
         'organization': organization,
         'comments': comments,
         'form': form,
+        'org_classification': org_classification,
         'captcha_form': captcha_form,
         'pag_url': reverse("organization:view_organization", args=(org_id,)),
         'show_pagination': show_pagination,

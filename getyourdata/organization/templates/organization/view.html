@@ -9,7 +9,9 @@
       <div class="col-md-12">
         <div class="page-header">
           <h1>{{ organization.name }}</h1>
-          <a href="#foo">
+          {% for c in org_classification %}
+            <a href="{{ c.category_link }}">{{ c.category_name }}</a>
+          {% endfor %}
         </div>
       </div>
     </div>
