@@ -165,3 +165,17 @@ img.center {
 .organization-list-filter {
     padding-bottom: 10px;
 }
+
+/* Formatting for section to describe data processing */
+
+.data_processing_header {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.data_processing_content_list {
+    margin-bottom: 0px;
+}
+
+.data_processing_content_list {
+}
