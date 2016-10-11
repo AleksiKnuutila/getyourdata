@@ -111,6 +111,37 @@
           {% endblocktrans %}</p>
         {% endif %}
         <hr>
+        {% if organization.has_data_processing_description %}
+          <h2>{% trans "How they use personal data" %}</h2>
+          <hr>
+          <p>
+          {% for row in organization.data_processing_description_displayed %}
+            {% if row|slice:":1" == '#' %}
+              <p class="data_processing_header">{{ row|slice:"2:" }}</p>
+            {% elif row|slice:":1" == '*' %}
+              <p class="data_processing_content">&bull; {{ row|slice:"2:" }}</p>
+            {% else %}
+              <p class="data_processing_content">{{ row }}</p>
+            {% endif %}
+          {% endfor %}
+          {% if organization.data_processing_description_collapsed %}
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapse_data_processing" aria-expanded="false" aria-controls="collapse_data_processing">
+              Show more
+            </a>
+            <div class="collapse" id="collapse_data_processing">
+              {% for row in organization.data_processing_description_collapsed %}
+                {% if row|slice:":1" == '#' %}
+                  <p class="data_processing_header">{{ row|slice:"2:" }}</p>
+                {% elif row|slice:":1" == '*' %}
+                  <p class="data_processing_content">&bull; {{ row|slice:"2:" }}</p>
+                {% else %}
+                  <p class="data_processing_content">{{ row }}</p>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </p>
+        {% endif %}
+      {% endif %}
         <div class="panel panel-default">
           <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> {% trans "Received feedback" %}{% if comments %}<span class="pull-right">{% trans 'Average rating' %} {{ organization.average_rating }}/5</span>{% endif %}</div>
           <div class="panel-body">

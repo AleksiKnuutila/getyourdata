@@ -15,7 +15,9 @@ from organization.categories import organization_categories
 
 from getyourdata.models import BaseModel
 
+from bs4 import BeautifulSoup, NavigableString
 import re
+import ptpdb
 
 
 class AuthenticationField(BaseModel):
@@ -184,8 +186,7 @@ class OrganizationDetails(Timestampable, BaseModel):
     # Quick way of doing categories, let's do this properly with classes when
     # we know what exactly our needs are when tagging organisations.
     def classifications_with_links(self):
-        """ Parse the organization's tags and return a dict with plaintext names and links to categories.
-        """
+        """ Parse the organization's tags and return a dict with plaintext names and links to categories. """
         tags = self.classification.split(' ')
         categories = []
         for tag in tags:
@@ -194,6 +195,69 @@ class OrganizationDetails(Timestampable, BaseModel):
                     'category_link': reverse('organization:list_organizations', kwargs={'tag':tag})})
         return categories
 
+    # So far this only works for data from ICO's Register
+    def data_processing_description_plaintext(self):
+        """ Returns description of processing in plaintext """
+        def is_header(text):
+            """ Is it a header in ICO's output? """
+            HEADERS = [
+                'Reasons/purposes for processing information',
+                'Type/classes of information processed',
+                'We also process sensitive classes of information that may include:',
+                'Who the information is processed about',
+                'We process personal information about:',
+                'Who the information may be shared with',
+                'Where necessary or required we share information with:',
+                'Transfers'
+                ]
+            return text in HEADERS
+
+        def get_text(tag):
+            if isinstance(tag, basestring):
+                text = tag
+            else:
+                text = tag.text
+            return text
+
+        desc = self.data_processing_description
+        soup = BeautifulSoup(desc, 'html.parser')
+        # Collect output in array
+        output = []
+        for tag in soup.children:
+            text = get_text(tag)
+            # remove leading and trailing whitespace
+            text = text.strip()
+            # skip if only whitespace
+            if not text or text.isspace(): continue
+            # skip first few descriptive tags from ICO
+            if 'Nature of work -' in text: continue
+            if 'The following is a broad description of the' in text: continue
+            # let's use the ul constructs as is, even if the HTML given by ICO is scrambled
+            if tag.name == 'ul':
+                # remove all tags except <li>
+                text = re.sub('(?i)<(?!li).*?>', '', str(tag))
+                items = text.split('<li>')[1:]
+                # lead with * for ist items
+                output.extend(list('* ' + s for s in items))
+            else:
+                # lead with # for headers
+                if is_header(text): text = '# ' + text
+                output.append(text)
+        return output
+
+    def data_processing_description_displayed(self):
+        """ The part of data processing description displayed by default """
+        desc = self.data_processing_description_plaintext()
+        # find the index of the second row that starts with '#' (where second header starts)
+        second_header = next(idx for idx in range(1,len(desc)) if desc[idx][:1] == '#')
+        return desc[0:second_header]
+
+    def data_processing_description_collapsed(self):
+        """ The part of data processing description collapsed by default """
+        desc = self.data_processing_description_plaintext()
+        # find the index of the second row that starts with '#' (where second header starts)
+        second_header = next(idx for idx in range(1,len(desc)) if desc[idx][:1] == '#')
+        return desc[second_header:]
 
     def plaintext_description(self):
         """ Return organisation description without potential HTML tags and []-style references
@@ -237,6 +301,14 @@ class Organization(OrganizationDetails):
     @property
     def has_description(self):
         return self.description != ""
+
+    @property
+    def has_classification(self):
+        return self.classification != ""
+
+    @property
+    def has_data_processing_description(self):
+        return self.data_processing_description != ""
 
     @property
     def accepts_email(self):
