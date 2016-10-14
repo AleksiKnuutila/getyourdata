@@ -12,6 +12,9 @@
           {% if organization.has_classification %}
             {% for c in organization.classifications_with_links %}
               <a href="{{ c.category_link }}">{{ c.category_name }}</a>
+              {% if not forloop.last %}
+                and
+              {% endif %}
             {% endfor %}
           {% endif %}
         </div>
@@ -72,14 +75,12 @@
       <div class="col-md-8">
         {% if organization.has_description %}
           <h2>{% trans "Description" %}</h2>
-          <hr>
           <p>
           {{ organization.plaintext_description }}
           </p>
+          <hr>
         {% endif %}
-        <hr>
         <h2>{% trans "Contact information" %}</h2>
-        <hr>
         {% if not organization.verified %}
           <div class="alert alert-danger">
             <strong>{% trans "Unverified contact details" %}</strong><br>
@@ -113,7 +114,6 @@
         <hr>
         {% if organization.has_data_processing_description %}
           <h2>{% trans "How they use personal data" %}</h2>
-          <hr>
           <p>
           {% for row in organization.data_processing_description_displayed %}
             {% if row|slice:":1" == '#' %}

@@ -10,6 +10,6 @@ urlpatterns = [
         organization_views.new_organization, name="new_organization"),
     url(r'^$',
         organization_views.list_organizations, name="list_organizations"),
-    url(r'^tag/(?P<tag>[a-z_]+)$',
+    url(r'^tag/(?P<tag>[a-zA-Z_]+)$',
         organization_views.list_organizations, name="list_organizations"),
 ]

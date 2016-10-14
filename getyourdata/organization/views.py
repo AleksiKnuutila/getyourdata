@@ -20,28 +20,29 @@ def list_organizations(request, tag=""):
     View to select organizations for a data request
     """
     page = request.GET.get("page", 1)
-    if tag is None:
+    if not tag:
         orgs = Organization.objects.filter(verified=True)
     else:
         orgs = Organization.objects.filter(verified=True,
-                classification__iregex=r"\y{0}\y".format(tag))
+                tags__iregex=r"\y{0}\y".format(tag))
     orgs_per_page = settings.ORGANIZATIONS_PER_PAGE
     org_ids = request.POST.getlist("org_ids")
 
+    org_count = orgs.count()
     organizations = get_objects_paginator(page, orgs, orgs_per_page)
+    show_pagination = orgs_per_page < org_count
 
     if request.POST.get("create_request", None) and len(org_ids) > 0:
         # User wants to create a request with selected organizations
         return redirect(
             reverse("data_request:request_data", args=(",".join(org_ids),)))
 
-    show_pagination = orgs_per_page < len(orgs)
-
     return render(
         request, 'organization/list.html',
         {'organizations': organizations,
          'show_pagination': show_pagination,
          'org_ids': org_ids,
+         'org_count': org_count,
          'pag_url': reverse("organization:list_organizations"),
          })
 

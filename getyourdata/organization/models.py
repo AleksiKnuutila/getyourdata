@@ -172,7 +172,9 @@ class OrganizationDetails(Timestampable, BaseModel):
 
     # array of items referencing "http://popoloproject.com/schemas/identifier.json#"
     identifiers = GenericRelation('Identifier', help_text="Issued identifiers")
-    classification = models.CharField(_("classification"), max_length=512, blank=True, help_text=_("An organization category, e.g. committee"))
+    # classification = models.CharField(_("classification"), max_length=512, blank=True, help_text=_("An organization category, e.g. committee"))
+    classification = GenericRelation('Classification', help_text="Organization's classification accoring to some schema")
+    tags = models.CharField(_("tags"), max_length=512, blank=True, help_text=_("Tags that reflect e.g. the organization's type"))
 
     # array of items referencing "http://popoloproject.com/schemas/link.json#"
     links = GenericRelation('Link', help_text="URLs to documents about the organization")
@@ -187,11 +189,11 @@ class OrganizationDetails(Timestampable, BaseModel):
     # we know what exactly our needs are when tagging organisations.
     def classifications_with_links(self):
         """ Parse the organization's tags and return a dict with plaintext names and links to categories. """
-        tags = self.classification.split(' ')
+        tags = self.tags.split(' ')
         categories = []
         for tag in tags:
             if tag in organization_categories:
-                categories.append({'category_name': organization_categories[tag]['organisation_type'],
+                categories.append({'category_name': organization_categories[tag]['organisation_type_singular'],
                     'category_link': reverse('organization:list_organizations', kwargs={'tag':tag})})
         return categories
 
@@ -223,6 +225,7 @@ class OrganizationDetails(Timestampable, BaseModel):
         soup = BeautifulSoup(desc, 'html.parser')
         # Collect output in array
         output = []
+        # iterate through top-level tags
         for tag in soup.children:
             text = get_text(tag)
             # remove leading and trailing whitespace
@@ -232,7 +235,8 @@ class OrganizationDetails(Timestampable, BaseModel):
             # skip first few descriptive tags from ICO
             if 'Nature of work -' in text: continue
             if 'The following is a broad description of the' in text: continue
-            # let's use the ul constructs as is, even if the HTML given by ICO is scrambled
+            if 'Description of processing' in text: continue
+            # note the lists inside UL tags
             if tag.name == 'ul':
                 # remove all tags except <li>
                 text = re.sub('(?i)<(?!li).*?>', '', str(tag))
@@ -429,6 +433,13 @@ class Identifier(GenericRelatable, models.Model):
 
     def __str__(self):
         return "{0}: {1}".format(self.scheme, self.identifier)
+
+class Classification(GenericRelatable, models.Model):
+    classification = models.CharField(_("classification"), max_length=512, help_text=_("A classification for this Organization within some classification scheme"))
+    scheme = models.CharField(_("scheme"), max_length=128, blank=True, help_text=_("A classification scheme, e.g. SIC"))
+
+    def __str__(self):
+        return "{0}: {1}".format(self.scheme, self.classification)
 
 class Link(GenericRelatable, models.Model):
     """

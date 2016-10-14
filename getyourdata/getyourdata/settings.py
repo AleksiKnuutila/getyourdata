@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'captcha',
     'pipeline',
+    'sass_processor',
 
     'getyourdata',
     'home',
