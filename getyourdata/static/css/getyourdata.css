@@ -1,3 +1,5 @@
+
+
 body {
     padding-top: 28px;
     overflow-x: hidden;
@@ -164,6 +166,21 @@ img.center {
 
 .organization-list-filter {
     padding-bottom: 10px;
+}
+
+.organization-list-category-header {
+    font-weight: bold;
+    font-size: 21px;
+    margin-bottom: 13px;
+    margin-top: 35px;
+}
+
+.organization-list-link {
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+
+.organization-list-category-link {
 }
 
 /* Formatting for section to describe data processing */

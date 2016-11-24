@@ -270,6 +270,30 @@ class OrganizationDetails(Timestampable, BaseModel):
         desc = re.sub('\[[^\[]+?\]', '', desc)
         return desc
 
+    def get_homepage_link(self):
+        links = Link.objects.filter(object_id=self.id)
+        for link in links:
+            if link.note == 'Homepage':
+                return link.url
+
+    def get_opencorporates_link(self):
+        links = Link.objects.filter(object_id=self.id)
+        for link in links:
+            if link.note == 'OpenCorporates link':
+                return link.url
+
+    def get_wdtk_link(self):
+        links = Link.objects.filter(object_id=self.id)
+        for link in links:
+            if link.note == 'WhatDoTheyKnow.com link for Freedom of Information Requests':
+                return link.url
+
+    def get_ico_link(self):
+        links = Source.objects.filter(object_id=self.id)
+        for link in links:
+            if link.note == 'ICO Data Controller Register entry':
+                return link.url
+
     class Meta:
         abstract = True
 

@@ -111,6 +111,18 @@
             This organization does not have any valid contact details at the moment.
           {% endblocktrans %}</p>
         {% endif %}
+        {% if organization.get_homepage_link %}
+          <a class="organization-view-link" href="{{ organization.get_homepage_link }}">{{ organization.name }} homepage</a>
+        {% endif %}
+        {% if organization.get_wdtk_link %}
+          <a class="organization-view-link" href="{{ organization.get_wdtk_link }}">Freedom of Information requests to {{ organization.name }}</a>
+        {% endif %}
+        {% if organization.get_opencorporates_link %}
+          <a class="organization-view-link" href="{{ organization.get_opencorporates_link }}">{{ organization.name }} on OpenCorporates</a>
+        {% endif %}
+        {% if organization.get_ico_link %}
+          <a class="organization-view-link" href="{{ organization.get_ico_link }}">{{ organization.name }} on ICO</a>
+        {% endif %}
         <hr>
         {% if organization.has_data_processing_description %}
           <h2>{% trans "How they use personal data" %}</h2>

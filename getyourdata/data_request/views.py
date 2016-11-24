@@ -223,6 +223,91 @@ def send_request(request, org_ids):
     return review_request(request, org_ids, prevent_redirect=True)
 
 
+def direct_request(request, org_id):
+    """
+    Create a request PDF without having to go through previous steps (filling
+    details, review)
+    """
+    (organization, email_organization,
+     mail_organization) = get_organization_tuple(org_id)
+
+    pdf_pages = []
+    email_requests = []
+
+    for organization in organizations:
+        data_request = get_data_request(organization, form)
+
+        # Generate PDF pages for mail requests
+        try:
+            pdf_page = generate_pdf_page(data_request)
+            if pdf_page:
+                pdf_pages.append(pdf_page)
+        except RuntimeError:
+            messages.error(
+                request,
+                _("The PDF file couldn't be created! Please "
+                  "try again later."))
+
+            return review_request(
+                request, org_ids, prevent_redirect=True)
+
+        # Generate email messages
+        if organization.accepts_email:
+            email_requests.append(data_request)
+
+    # Generate PDF pages for any mail-only requests
+    pdf_data = generate_request_pdf(pdf_pages)
+
+    # Send email requests
+    if not send_email_requests(email_requests, form):
+        messages.error(
+            request, _("Email requests couldn't be sent! Please try again later."))
+
+        return review_request(request, org_ids, prevent_redirect=True)
+
+    if cleaned_data.get("user_email_address", None):
+        if not send_feedback_message_by_email(
+                cleaned_data.get("user_email_address"),
+                request,
+                organizations,
+                pdf_data):
+            messages.error(
+                request,
+                _("A feedback message couldn't be sent!"))
+        else:
+            mail_request_copy_sent = True
+
+    if pdf_data:
+        # Encode the PDF data as base64 to be rendered in the view
+        pdf_data = base64.b64encode(pdf_data)
+
+    # Request was successful!
+
+    # Increasing organizations requested amount
+    organizations.update(requested_amount=F('requested_amount') + 1)
+
+    if len(mail_organizations) > 0:
+        return render(request, "data_request/request_data_sent.html", {
+            "form": form,
+            "organizations": organizations,
+            "mail_organizations": mail_organizations,
+            "email_organizations": email_organizations,
+            "pdf_data": pdf_data,
+            "org_ids": org_ids,
+            "mail_request_copy_sent": mail_request_copy_sent
+        })
+    else:
+        return give_feedback(request, org_ids)
+else:
+    return review_request(
+        request, org_ids, False, prevent_redirect=True)
+
+    # Send user back to review page
+    # send POST parameter is removed to prevent redirect loop
+    return review_request(request, org_ids, prevent_redirect=True)
+
+
+
 def give_feedback(request, org_ids):
     """
     Requests have been finished, just show user a link of organization profiles
