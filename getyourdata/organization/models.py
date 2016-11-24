@@ -294,6 +294,12 @@ class OrganizationDetails(Timestampable, BaseModel):
             if link.note == 'ICO Data Controller Register entry':
                 return link.url
 
+    def get_ico_identifier(self):
+        identifiers = Identifier.objects.filter(object_id=self.id)
+        for identifier in identifiers:
+            if identifier.scheme == 'UK ICO registration number':
+                return identifier.identifier
+
     class Meta:
         abstract = True
 

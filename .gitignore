@@ -64,3 +64,4 @@ target/
 # pyCharm IDE
 .idea/
 *.swp
+.DS_Store

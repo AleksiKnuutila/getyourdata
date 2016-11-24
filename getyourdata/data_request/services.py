@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 from django.core.mail import EmailMessage, EmailMultiAlternatives, get_connection
 from django.template.loader import render_to_string
@@ -128,3 +130,9 @@ def send_feedback_message_by_email(email_address, request,
         return True
     except:
         return False
+
+def standard_pdf_form():
+    file_path = os.path.join(settings.STATIC_ROOT, 'subject access request form.pdf')
+    with open(file_path,'rb') as f:
+        output = f.read()
+    return output

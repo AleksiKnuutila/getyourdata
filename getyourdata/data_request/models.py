@@ -134,11 +134,65 @@ class DataRequest(object):
             }
         )
 
+    def to_text(self, html=False):
+        """
+        Return data request as a HTML-formatted document
+
+        :html: If True, return a HTML-formatted document,
+               otherwise return the content in plain-text
+        """
+        person_name = self.get_auth_content("name")
+
+        request_content, created = RequestContent.objects.get_or_create(
+            title="Default")
+
+        if html:
+            template = "data_request/mail/request.html"
+        else:
+            template = "data_request/mail_plain/request.html"
+
+        return render_to_string(
+            template, {
+                "data_request": self,
+                "person_name": person_name,
+                "request_content": request_content,
+                "current_datetime": timezone.now()
+            })
+
+    def contact_to_text(self, html=False):
+        """
+        Return the contact information part of the requset in HTML
+
+        :html: If True, return a HTML-formatted document,
+               otherwise return the content in plain-text
+        """
+        request_content, created = RequestContent.objects.get_or_create(
+            title="Default")
+
+        if html:
+            template = "data_request/mail/org_contact_info.html"
+        else:
+            template = "data_request/mail_plain/org_contact_info.html"
+
+        return render_to_string(
+            template, {
+                "data_request": self,
+                "organization": self.organization,
+                "current_datetime": timezone.now()
+            })
+
+
     def to_pdf(self):
         """
         Return data request as a PDF-formatted document
         """
         return convert_html_to_pdf(self.to_text(html=True))
+
+    def contact_to_pdf(self):
+        """
+        Return data request as a PDF-formatted document
+        """
+        return convert_html_to_pdf(self.contact_to_text(html=True))
 
     def __unicode__(self):
         return "Data request for " + self.organization.name

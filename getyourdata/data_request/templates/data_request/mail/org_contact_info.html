@@ -1,0 +1,89 @@
+{% load i18n %}
+<html>
+  <head>
+    <title>{% trans "Subject access request: " %}{{ data_request.organization.name }}</title>
+    <style>
+body {
+  font-size: 12px;
+  font-family: Verdana;
+  margin-left: 100px;
+}
+
+        .letter-spacer {
+          color: transparent;
+          opacity: 0;
+          padding-bottom: 4cm;
+        }
+
+        .recipient-address {
+          text-align: right;
+          padding-right: 1.5cm;
+        }
+
+        .page-break {
+          page-break-after: always;
+        }
+
+        .datetime-row {
+          width: 100%;
+          /* text-align: right; */
+          padding-bottom: 3cm;
+        }
+
+        .datarequest {
+          text-align: left;
+        }
+
+        .datarequest-heading {
+          font-weight: bold;
+          padding-bottom: 1cm;
+        }
+
+        .datarequest-content {
+
+        }
+
+        .datarequest-content3 {
+          padding-top: 1cm;
+        }
+
+        .datarequest-footer {
+          padding-top: 1cm;
+        }
+
+
+    </style>
+
+
+  </head>
+  <body>
+
+    <!-- the idea is to produce
+      printouts (papers) that can be folded, stapled together
+      and are then ready to be mailed.
+
+      the recipient organization address will be in the right part of
+      the first page
+    -->
+
+    <!-- a simple spacer element to circumvent a bug in pdf converter that can't
+      handle margin-top property -->
+      <div class="letter-spacer">&nbsp;</div>
+
+      <h1>{% trans "Subject access request" %}</h1>
+
+      <div class="datetime-row">
+        <p>{{ current_datetime }}</p>
+      </div>
+
+      <h1>Recipient:</h1>
+      <p>{{ organization.name }}</p>
+      <p>{{ organization.address_line_one }}</p>
+      <p>{{ organization.address_line_two }}</p>
+      <p>{{ organization.postal_code }}</p>
+      <p>{{ organization.country }}</p>
+
+      <p>{% trans "ICO Registration Number:" %} {{organization.get_ico_identifier }}</p>
+
+  </body>
+</html>
