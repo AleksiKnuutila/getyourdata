@@ -1,6 +1,12 @@
 /* front page:
 */
 
+$base-colour: #5688C0;
+$base-darker: #284C73; /* rgb(40,76,115) */
+$warm-contrast: #CA766F;
+$cold-contrast: #808D31;
+$cold-contrast-darker: #6A732E;
+
 $base-font-colour: #333333;
 $link-colour: #265C83;
 $heading-colour: #333333;
@@ -51,7 +57,8 @@ $heading-colour: #333333;
 }
 
 #bootstrap-overrides .btn-primary {
-    background-color: #46494e;
+    font-size: 19px;
+    background-color: $warm-contrast;
     border-color: #d2d3d2;
 }
 
@@ -185,13 +192,15 @@ $heading-colour: #333333;
 }
 .hero-unit h2 {
     font-size: 19px;
+    font-weight: normal;
     line-height: 1.4;
     color: #FFFFFF;
     max-width: 600px;
 }
 .hero-box {
     margin-top: 40px;
-    background-color: rgba(0,0,0,0.6);
+/*    background-color: rgba(0,0,0,0.6); */
+    background-color: rgba(40,76,115,0.3);
     padding: 18px;
     padding-top: 10px;
     display: inline-block;
@@ -200,6 +209,7 @@ $heading-colour: #333333;
     font-size: 19px;
     color: #FFFFFF;
     margin-top: 18px;
+    font-weight: normal;
 }
 .hero-form {
     max-width: 350px;
@@ -235,7 +245,6 @@ section h2.section-heading {
     font-weight: 700;
 }
 section h3.section-subheading {
-  font-size: 16px;
   font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-transform: none;
   font-weight: 400;
@@ -244,6 +253,9 @@ section h3.section-subheading {
       margin-right: auto;
     text-align: center;
   margin-bottom: 75px;
+      font-size: 20px;
+    line-height: 1.4;
+    margin-top: 37px;
 }
 @media (min-width: 768px) {
 }
