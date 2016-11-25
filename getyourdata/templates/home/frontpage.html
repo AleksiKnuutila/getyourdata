@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block navbar %}{% include "navbar-frontpage.html" %}{% endblock navbar %}
+
 {% block content %}
 
 {% load i18n %}
@@ -12,7 +14,7 @@
     background-image:url({% static 'img/home/hero-image.jpg' %});
     background-size:cover;
     background-color: #EEEEEE;
-    height:400px;
+    height: 450px;
     padding: 60px;
   }
 .hero-unit h1 {

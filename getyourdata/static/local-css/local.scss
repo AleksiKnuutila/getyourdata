@@ -24,6 +24,11 @@ $heading-colour: #333333;
     border-color: #fff;
 }
 
+#bootstrap-overrides .navbar-frontpage {
+    background-color: transparent;
+    border-color: transparent;
+}
+
 #bootstrap-overrides .navbar-brand {
     color: #fff;
 }
