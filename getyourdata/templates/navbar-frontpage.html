@@ -1,0 +1,71 @@
+{% load i18n %}
+{% load extra_tags %}
+{% load flatpages %}
+
+<div class="navbar navbar-frontpage navbar-static-top navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar"
+                    aria-expanded="false">
+                <span class="sr-only">{% trans "Toggle navigation" %}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'home' %}">
+              <i id="icon" class="fa fa-address-book-o" style="text-shadow: none; color: rgb(0, 0, 0); font-size: 24px; height: 40px; width: 40px; line-height: 40px; border-radius: 50%; text-align: center; background-color: rgb(255, 255, 255);"></i>
+              {% current_site %}
+            </a>
+      {% comment %}
+            <ul class="pull-left nav navbar-nav">
+                {# Quick feedback #}
+                <li class="dropdown">
+                    <a id="give_feedback_nav_link" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">
+                        {% trans "Give feedback" %} <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% include 'feedback.html' %}
+                    </ul>
+                </li>
+            </ul>
+      {% endcomment %}
+        </div>
+        <div class="collapse navbar-collapse" id="main-navbar">
+            <ul class="pull-right nav navbar-nav">
+                {# Translators: Navbar link #}
+                {% get_current_language as current_language %}
+                {% comment %}
+                {% get_flatpages as flatpages %}
+
+                {% for page in flatpages %}
+                    <li><a href="/{{ current_language }}{{ page.url }}">{{ page.title }}</a></li>
+                {% endfor %}
+              {% endcomment %}
+                {% comment %}<li><a href="{% url 'organization:list_organizations' %}">{% trans "Organizations" %}</a></li>{% endcomment %}
+                <li><a class="navbar-frontpage-link" href="{% url 'django.contrib.flatpages.views.flatpage' url='about/' %}">{% trans "About" %}</a></li>
+                <li><a class="navbar-frontpage-link" href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
+
+                {% comment %}
+                  {% if LANGUAGES|length > 1 %}
+                    {# Language selection #}
+                    <li class="dropdown">
+                      {% get_language_info for current_language as current_lang_info %}
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false">
+                        {{ current_lang_info.name_translated }} <span class="caret"></span>
+                      </a>
+                      <ul class="dropdown-menu">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                          <li><a href="{{ request.get_full_path|change_url_lang:lang_code }}">{{ lang_name }}</a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% endif %}
+                {% endcomment %}
+
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>

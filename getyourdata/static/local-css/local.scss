@@ -56,6 +56,12 @@ $heading-colour: #333333;
     color: #fff;
 }
 
+button#info-button {
+    font-size: 19px;
+    background-color: $base-colour;
+    border-color: #d2d3d2;
+}
+
 #bootstrap-overrides .btn-primary {
     font-size: 19px;
     background-color: $warm-contrast;
@@ -230,7 +236,7 @@ $heading-colour: #333333;
 @media (max-width: 480px) { }
 
 .text-primary {
-  color: #fed136;
+  color: $warm-contrast;
 }
 
 section {
@@ -264,3 +270,8 @@ section h3.section-subheading {
   text-transform: none;
 }
 
+.circle-text {
+    font-family: 'Andada';
+    font-size: 77px;
+    color: white;
+}
