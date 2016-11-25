@@ -9,16 +9,6 @@ $heading-colour: #333333;
     color: $base-font-colour;
 }
 
-#bootstrap-overrides a {
-  color: $link-colour;
-}
-#bootstrap-overrides a:visited { color: #265C83; }
-#bootstrap-overrides a:hover   { color: #7FDBFF; }
-#bootstrap-overrides a:active  {
-  transition: color .3s;
-  color: #007BE6;
-}
-
 #bootstrap-overrides .navbar-inverse {
     background-color: #ee766c;
     border-color: #fff;
@@ -30,10 +20,24 @@ $heading-colour: #333333;
 }
 
 #bootstrap-overrides .navbar-brand {
+    font-size: 28px;
+    font-family: 'Andada';
+}
+
+#bootstrap-overrides a.navbar-brand:visited {
     color: #fff;
 }
 
 #bootstrap-overrides .navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+
+#bootstrap-overrides a.navbar-frontpage-link {
+    color: #fff;
+    font-size: 16px;
+}
+
+#bootstrap-overrides a.navbar-frontpage-link:visited {
     color: #fff;
 }
 
@@ -140,4 +144,16 @@ $heading-colour: #333333;
 
 .organization-view-link {
   display: block;
+}
+
+/* link colours */
+
+#bootstrap-overrides a {
+  color: $link-colour;
+}
+#bootstrap-overrides a:visited { color: #265C83; }
+#bootstrap-overrides a:hover   { color: #7FDBFF; }
+#bootstrap-overrides a:active  {
+  transition: color .3s;
+  color: #007BE6;
 }
