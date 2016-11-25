@@ -20,11 +20,15 @@ def list_organizations(request, tag=""):
     View to select organizations for a data request
     """
     page = request.GET.get("page", 1)
-    if not tag:
-        orgs = Organization.objects.filter(verified=True)
-    else:
+    search = request.GET.get("search","")
+    if tag:
         orgs = Organization.objects.filter(verified=True,
                 tags__iregex=r"\y{0}\y".format(tag))
+    elif search:
+        orgs = Organization.objects.filter(verified=True,
+                name__icontains=search)
+    else:
+        orgs = Organization.objects.filter(verified=True)
     orgs_per_page = settings.ORGANIZATIONS_PER_PAGE
     org_ids = request.POST.getlist("org_ids")
 
@@ -41,6 +45,8 @@ def list_organizations(request, tag=""):
         request, 'organization/list.html',
         {'organizations': organizations,
          'show_pagination': show_pagination,
+         'tag': tag,
+         'search': search,
          'org_ids': org_ids,
          'org_count': org_count,
          'pag_url': reverse("organization:list_organizations"),
