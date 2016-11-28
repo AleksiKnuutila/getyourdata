@@ -194,6 +194,7 @@ button#info-button {
     background-size:cover;
     background-color: #EEEEEE;
     background-position: right;
+    height: 520px;
 }
 .hero-unit h1 {
     color: #FFFFFF;
@@ -206,12 +207,9 @@ button#info-button {
 }
 
 @media (min-width: 768px) {
-  .hero-unit {
-      height: 500px;
-  }
   .hero-unit h1 {
       font-size: 40px;
-      margin-top: 94px;
+      margin-top: 102px;
       margin-bottom: 0;
       max-width: 600px;
   }
@@ -219,12 +217,11 @@ button#info-button {
 
 @media (min-width: 480px) and (max-width: 767px) {
   .hero-unit {
-      height: 500px;
       padding: 15px;
   }
   .hero-unit h1 {
       font-size: 33px;
-      margin-top: 90px;
+      margin-top: 100px;
       margin-bottom: 0;
       max-width: 600px;
   }
@@ -232,7 +229,6 @@ button#info-button {
 
 @media (max-width: 479px) {
   .hero-unit {
-      height: 500px;
       padding: 15px;
   }
   .hero-unit h1 {
