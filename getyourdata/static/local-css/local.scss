@@ -24,6 +24,7 @@ $heading-colour: #333333;
     background-color: transparent;
     border-color: transparent;
     position: absolute; /* so that navbar is on top of hero image */
+    width: 100%;
 }
 
 #bootstrap-overrides .navbar-brand {
@@ -119,6 +120,16 @@ button#info-button {
     border-color: #f5f6f6;
 }
 
+#bootstrap-overrides .collapsed {
+    background-color: #ddd;
+}
+@media (max-width: 768px) {
+    #bootstrap-overrides ul.navbar-nav {
+        background-color: black;
+    }
+}
+
+
 
 /* FAQ list */
 
@@ -172,21 +183,12 @@ button#info-button {
   color: #007BE6;
 }
 
-@media (min-width: 768px) {
-    #bootstrap-overrides .container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header {
-        margin-right: 0;
-        margin-left: 45px;
-    }
-}
-
 .hero-unit {
     background-image:url("/static/img/home/hero-image.jpg");
     background-size:cover;
     background-color: #EEEEEE;
     background-position: right;
-    height: 500px;
-    padding: 60px;
-  }
+}
 .hero-unit h1 {
     color: #FFFFFF;
     font-size: 40px;
@@ -196,6 +198,46 @@ button#info-button {
     margin-bottom: 0;
     max-width: 600px;
 }
+
+@media (min-width: 768px) {
+  .hero-unit {
+      height: 500px;
+  }
+  .hero-unit h1 {
+      font-size: 40px;
+      margin-top: 94px;
+      margin-bottom: 0;
+      max-width: 600px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .hero-unit {
+      height: 500px;
+      padding: 15px;
+  }
+  .hero-unit h1 {
+      font-size: 33px;
+      margin-top: 90px;
+      margin-bottom: 0;
+      max-width: 600px;
+  }
+}
+
+@media (max-width: 479px) {
+  .hero-unit {
+      height: 500px;
+      padding: 15px;
+  }
+  .hero-unit h1 {
+      font-size: 28px;
+      margin-top: 67px;
+      margin-bottom: 0;
+      max-width: 600px;
+  }
+}
+
+
 .hero-unit h2 {
     font-size: 19px;
     font-weight: normal;
@@ -209,7 +251,9 @@ button#info-button {
     background-color: rgba(40,76,115,0.3);
     padding: 18px;
     padding-top: 10px;
+    padding-bottom: 25px;
     display: inline-block;
+    margin-left: -18px;
 }
 .hero-box label {
     font-size: 19px;
@@ -251,15 +295,15 @@ section h2.section-heading {
     font-weight: 700;
 }
 section h3.section-subheading {
-  font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-transform: none;
-  font-weight: 400;
-  max-width: 600px;
-    margin-lefT: auto;
-      margin-right: auto;
+    font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: none;
+    font-weight: 400;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
-  margin-bottom: 75px;
-      font-size: 20px;
+    margin-bottom: 75px;
+    font-size: 20px;
     line-height: 1.4;
     margin-top: 37px;
 }
