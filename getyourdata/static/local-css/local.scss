@@ -11,8 +11,17 @@ $base-font-colour: #333333;
 $link-colour: #265C83;
 $heading-colour: #333333;
 
+$header-font: 'Droid Sans', sans-serif;
+$body-font: 'Open Sans', sans-serif;
+
 #bootstrap-overrides .body, body {
     color: $base-font-colour;
+    font-family: $body-font;
+}
+
+#bootstrap-overrides .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    color: $base-font-colour;
+    font-family: $header-font;
 }
 
 #bootstrap-overrides .navbar-inverse {
@@ -42,7 +51,7 @@ $heading-colour: #333333;
 
 #bootstrap-overrides a.navbar-frontpage-link {
     color: #fff;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #bootstrap-overrides a.navbar-frontpage-link:visited {
@@ -78,9 +87,6 @@ button#info-button {
     background-color: #fed665;
 }
 
-#bootstrap-overrides .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    color: $base-font-colour;
-}
 
 #bootstrap-overrides .h1 .small, .h1 small, .h2 .small, .h2 small, .h3 .small, .h3 small, .h4 .small, .h4 small, .h5 .small, .h5 small, .h6 .small, .h6 small, h1 .small, h1 small, h2 .small, h2 small, h3 .small, h3 small, h4 .small, h4 small, h5 .small, h5 small, h6 .small, h6 small {
     font-weight: 400;
@@ -192,7 +198,7 @@ button#info-button {
 .hero-unit h1 {
     color: #FFFFFF;
     font-size: 40px;
-    letter-spacing: -1px;
+    letter-spacing: -0.3px;
     line-height: 1.3;
     margin-top: 50px;
     margin-bottom: 0;
@@ -237,23 +243,28 @@ button#info-button {
   }
 }
 
-
-.hero-unit h2 {
-    font-size: 19px;
-    font-weight: normal;
-    line-height: 1.4;
-    color: #FFFFFF;
-    max-width: 600px;
+@media (max-width: 767px) {
+    .row-spacing {
+        margin-top: 20px;
+    }
 }
+
 .hero-box {
     margin-top: 40px;
 /*    background-color: rgba(0,0,0,0.6); */
-    background-color: rgba(40,76,115,0.3);
+    background-color: rgba(40,76,115,0.6);
     padding: 18px;
     padding-top: 10px;
     padding-bottom: 25px;
     display: inline-block;
     margin-left: -18px;
+}
+.hero-box p {
+    font-size: 19px;
+    color: #FFFFFF;
+    margin-top: 18px;
+    line-height: 1.4;
+    max-width: 545px;
 }
 .hero-box label {
     font-size: 19px;
@@ -284,21 +295,17 @@ button#info-button {
 }
 
 section {
-  padding: 100px 0;
+  padding: 75px 0;
 }
 section h2.section-heading {
-  font-size: 40px;
+  font-size: 50px;
   margin-top: 0;
   margin-bottom: 15px;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    text-transform: uppercase;
-    font-weight: 700;
 }
-section h3.section-subheading {
-    font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+section .section-subheading {
     text-transform: none;
     font-weight: 400;
-    max-width: 600px;
+    max-width: 620px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
