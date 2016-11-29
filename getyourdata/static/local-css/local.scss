@@ -6,6 +6,7 @@ $base-darker: #284C73; /* rgb(40,76,115) */
 $warm-contrast: #CA766F;
 $cold-contrast: #808D31;
 $cold-contrast-darker: #6A732E;
+$dark-colour: #333;
 
 $base-font-colour: #333333;
 $link-colour: #265C83;
@@ -321,4 +322,35 @@ section .section-subheading {
     font-family: 'Andada';
     font-size: 77px;
     color: white;
+}
+
+footer {
+    background-color: $dark-colour;
+    min-height: 100px;
+    padding-top: 26px;
+}
+
+p.footer {
+    text-align: left;
+    color: #ddd;
+    max-width: 350px;
+    margin-bottom: 40px;
+}
+
+ul.footer-links {
+    text-align: left;
+    text-decoration: underline;
+    padding-left: 0px;
+}
+
+.footer-links {
+    max-width: 600px;
+}
+.footer-links-left {
+    width: 112px;
+    float: left;
+}
+.footer-links-right {
+    width: 175px;
+    float: right;
 }
