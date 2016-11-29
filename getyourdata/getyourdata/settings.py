@@ -205,7 +205,7 @@ USE_TZ = True
 
 LANGUAGES = (
     ('en', _('English')),
-    ('fi', _('Finnish')),
+#    ('fi', _('Finnish')),
 )
 
 LOCALE_PATHS = (
