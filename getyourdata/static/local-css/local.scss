@@ -10,7 +10,7 @@ $dark-colour: #333;
 
 $base-font-colour: #333333;
 $link-colour: #265C83;
-$heading-colour: #333333;
+$heading-colour: $base-colour;
 
 $header-font: 'Droid Sans', sans-serif;
 $body-font: 'Open Sans', sans-serif;
@@ -156,17 +156,15 @@ button#info-button {
 }
 
 #bootstrap-overrides .panel > .panel-heading {
-    color: $heading-colour;
-    background-color: #f5f6f6;
-    border-color: #f5f6f6;
-    font-weight: bold;
-}
+  color: $heading-colour;
+  background-color: white;
+  border-color: white;
+  font-weight: bold; }
 
 #bootstrap-overrides .panel {
-    color: $heading-colour;
-    background-color: #f5f6f6;
-    border-color: #f5f6f6;
-}
+  color: #959595;
+  background-color: white;
+  border-color: white; }
 
 #bootstrap-overrides .collapsed {
     background-color: #ddd;
@@ -178,12 +176,46 @@ button#info-button {
 }
 
 
-
 /* FAQ list */
 
 #bootstrap-overrides h4.panel-title {
-    font-weight: bold;
+    color: #5688C0;
+    font-size: 20px;
 }
+
+/* the elements for every paragraph created by CMS */
+div.panel-body div {
+    margin-bottom: 1em;
+    line-height: 1.5em;
+    font-size: 16px;
+}
+
+.pageheader {
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+/* Flat pages */
+
+.flatpage-content {
+    line-height: 1.5em;
+    font-size: 16px;
+    margin-bottom: 50px;
+}
+.flatpage-content p {
+    margin-bottom: 1em;
+}
+.flatpage-content div {
+    margin-bottom: 1em;
+}
+
+h2.subheader {
+    color: $heading-colour;
+    font-size: 20px;
+    margin-top: 45px;
+}
+
+
 
 /* process steps */
 
@@ -395,26 +427,4 @@ ul.footer-links {
     width: 175px;
     float: right;
 }
-
-
-/* Flat pages and FAQ */
-
-/* the elements for every paragraph created by CMS */
-div.panel-body div {
-    margin-bottom: 1em;
-    line-height: 1.5em;
-    font-size: 16px;
-}
-
-/* FAQ titles */
-h4.panel-title a {
-    color: #5688C0;
-    font-size: 20px;
-}
-
-.pageheader {
-    margin-bottom: 60px;
-    margin-top: 40px;
-}
-
 
