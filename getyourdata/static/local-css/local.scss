@@ -395,3 +395,26 @@ ul.footer-links {
     width: 175px;
     float: right;
 }
+
+
+/* Flat pages and FAQ */
+
+/* the elements for every paragraph created by CMS */
+div.panel-body div {
+    margin-bottom: 1em;
+    line-height: 1.5em;
+    font-size: 16px;
+}
+
+/* FAQ titles */
+h4.panel-title a {
+    color: #5688C0;
+    font-size: 20px;
+}
+
+.pageheader {
+    margin-bottom: 60px;
+    margin-top: 40px;
+}
+
+
