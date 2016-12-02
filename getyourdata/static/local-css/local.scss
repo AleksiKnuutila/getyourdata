@@ -10,7 +10,7 @@ $dark-colour: #333;
 
 $base-font-colour: #333333;
 $link-colour: #265C83;
-$heading-colour: $base-colour;
+$heading-colour: $base-darker;
 
 $header-font: 'Droid Sans', sans-serif;
 $body-font: 'Open Sans', sans-serif;
@@ -210,7 +210,7 @@ div.panel-body div {
 }
 
 h2.subheader {
-    color: $heading-colour;
+    color: #284C73;
     font-size: 20px;
     margin-top: 45px;
 }

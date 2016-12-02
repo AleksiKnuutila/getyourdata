@@ -13,14 +13,12 @@ from home import views as home_views
 from data_request import views as data_request_views
 
 
-urlpatterns = i18n_patterns(
+urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^admin/filebrowser/', include(filebrowser_site.urls)),
     url(r'^grappelli/', include(grappelli_urls)),
     url(r'^tinymce/', include(tinymce_urls)),
-
     url(r'^api/', include('api.urls', namespace="api")),
-
     # This method uses frontpage stored in CMS
 #    url(r'^$', home_views.home, name="home"),
     url(r'^$', home_views.frontpage_template, name="home"),
@@ -31,11 +29,11 @@ urlpatterns = i18n_patterns(
     url(r'^request/', include(
         'data_request.urls', namespace="data_request")),
     url(r'^faq/', home_views.faq, name='faq'),
-)
-
-urlpatterns += [
-    url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^(?P<url>.*/)$', flatpage_views.flatpage)
 ]
+if settings.USE_I18N_URL_PATTERNS:
+    urlpatterns = i18n_patterns(*urlpatterns)
+    urlpatterns += [ url(r'^i18n/', include('django.conf.urls.i18n')) ]
 
 if settings.DEBUG:
     urlpatterns += static(
@@ -43,9 +41,6 @@ if settings.DEBUG:
     urlpatterns += static(
         settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-if 'rosetta' in settings.INSTALLED_APPS:
-    urlpatterns += url(r'^rosetta/', include('rosetta.urls')),
+# if 'rosetta' in settings.INSTALLED_APPS:
+#     urlpatterns += url(r'^rosetta/', include('rosetta.urls')),
 
-urlpatterns += i18n_patterns(
-    url(r'^(?P<url>.*/)$', flatpage_views.flatpage),
-)
