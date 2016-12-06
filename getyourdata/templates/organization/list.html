@@ -14,7 +14,7 @@
           <div class="form-group">
             <form class="form-inline" action="{% url 'organization:list_organizations' %}" method="get">
               {% comment %} {% csrf_token %} {% endcomment %}
-              <input type="text" class="form-control" name="search" size="35" placeholder="Organization's name">
+              <input type="text" class="form-control" name="search" size="35" placeholder="Organisation's name">
               <button type="submit" class="btn btn-default">Search</button>
             </form>
           </div>
@@ -32,7 +32,7 @@
       {% endcomment %}
 
       {% if organizations %}
-        <b>{{ org_count }} organizations in list</b>
+        <b>{{ org_count }} organisations in list</b>
         <div id="organization-list">
           {% for organization in organizations %}
             <div class="organization-list-item">
@@ -48,7 +48,7 @@
           {% endif %}
         </div>
       {% else %}
-        <p>{% trans "No organizations yet." %}</p>
+        <p>{% trans "No organisations yet." %}</p>
         <div>
           <a class="btn btn-primary" href="{% url "organization:new_organization" %}">{% trans "Add organization" %}</a>
         </div>

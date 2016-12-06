@@ -26,7 +26,7 @@
           <div class="panel-heading"><span class="glyphicon glyphicon-envelope"></span> {% trans "Send a request" %}</div>
           <div class="panel-body">
             <p>{% blocktrans trimmed %}
-              Does this organization have your data? Send them a request.
+              Does this organisation have your data? Send them a request.
             {% endblocktrans %}</p>
             <a class="btn btn-success" href="{% url "data_request:request_data" organization.id %}">{% trans "Create request" %}</a>
           </div>
@@ -35,7 +35,7 @@
           <div class="panel-heading"><span class="glyphicon glyphicon-wrench"></span> {% trans "Update details" %}</div>
           <div class="panel-body">
             <p>{% blocktrans trimmed %}
-              Is this organization's information incorrect or out-of-date? Update the organization profile to keep it up-to-date.
+              Is this organisation's information incorrect or out-of-date? Update the organisation profile to keep it up-to-date.
             {% endblocktrans %}</p>
             <a class="btn btn-info" href="{% url "organization:edit_organization" organization.id %}">{% trans "Update details" %}</a>
           </div>
@@ -44,7 +44,7 @@
           <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> {% trans "Feedback" %}</div>
           <div class="panel-body">
             <p>{% blocktrans trimmed %}
-              Do you have feedback regarding this organization? Send us feedback using the following form.
+              Do you have feedback regarding this organisation? Send us feedback using the following form.
             {% endblocktrans %}</p>
             <form role="form" action="{% url 'organization:view_organization' organization.id %}" method="post">
               {% csrf_token %}
@@ -85,7 +85,7 @@
           <div class="alert alert-danger">
             <strong>{% trans "Unverified contact details" %}</strong><br>
             {% blocktrans trimmed %}
-              The contact details for this organization have not been verified by a staff member yet.
+              The contact details for this organisation have not been verified by a staff member yet.
             {% endblocktrans %}
           </div>
         {% endif %}
@@ -108,7 +108,7 @@
           {% endif %}
         {% else %}
           <p>{% blocktrans trimmed %}
-            This organization does not have any valid contact details at the moment.
+            This organisation does not have any valid contact details at the moment.
           {% endblocktrans %}</p>
         {% endif %}
         {% if organization.get_homepage_link %}
