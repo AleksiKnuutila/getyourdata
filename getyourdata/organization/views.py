@@ -15,6 +15,15 @@ from organization.forms import NewOrganizationForm, EditOrganizationForm
 from organization.forms import CommentForm
 from organization.utils import get_objects_paginator
 
+def search_organizations(request, tag=""):
+    """
+    Returns simple form for searching organizations
+    """
+    count = Organization.objects.count()
+    return render(
+            request, 'organization/search.html',
+            {'organizations_count': count})
+
 def list_organizations(request, tag=""):
     """
     View to select organizations for a data request

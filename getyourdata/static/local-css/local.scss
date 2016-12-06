@@ -18,6 +18,7 @@ $body-font: 'Open Sans', sans-serif;
 #bootstrap-overrides .body, body {
     color: $base-font-colour;
     font-family: $body-font;
+    line-height: 1.5em;
 }
 
 #bootstrap-overrides .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
@@ -215,7 +216,17 @@ h2.subheader {
     margin-top: 45px;
 }
 
-
+/* Search page */
+.search-box {
+    background-color: rgba(40, 76, 115, 0.2);
+    padding: 30px;
+    /* margin-left: -30px; */
+    margin-bottom: 42px;
+    max-width: 600px;
+}
+.search-form {
+    margin-top: 30px;
+}
 
 /* process steps */
 

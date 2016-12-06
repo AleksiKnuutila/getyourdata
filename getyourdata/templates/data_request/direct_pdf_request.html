@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% load extra_tags %}
+
+{% block content %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h3><span class="glyphicon glyphicon-info-sign"></span> {% trans "Print mail requests" %}</h3>
+          <div class="alert alert-warning">
+            <strong>
+              {% blocktrans count counter=mail_organizations|length trimmed %}
+                One request needs to be printed.
+                {% plural %}
+                {{ counter }} requests need to be printed.
+              {% endblocktrans %}
+            </strong>
+            <br>
+            <p>{% blocktrans trimmed %}
+              The following organizations require that data requests are sent by mail:
+            {% endblocktrans %}</p>
+            <ul>
+              {% for organization in mail_organizations %}
+                <li>{{ organization.name }}</li>
+              {% endfor %}
+            </ul>
+            <br>
+            <p>
+            {% blocktrans %}
+              You can send data requests to the listed organizations by mail. The following document
+              contains the required pages. If your printer supports two-sided printing, the print-out
+              can be folded, stapled and mailed as-is (please consult your printer's user guide for
+              two-sided printing instructions). If using one-sided printing the address pages are
+              printed on separate papers.
+            {% endblocktrans %}
+            </p>
+            <br>
+            <form id="feedback_form" method="post" action="{% url 'data_request:give_feedback' org_id %}">
+              {% csrf_token %}
+              {% bootstrap_form form|hide_form %}
+              <input id="submit_form" style="display: none;" type="submit" value="submit"/>
+              <a class="btn btn-xl btn-success" href="data:application/pdf;base64,{{ pdf_data }}"
+                                                target="_blank" download="request.pdf" onclick="$('#submit_form').click()"><span
+                                                                                       class="glyphicon glyphicon-download-alt"></span> {% trans "Download PDF" %}</a>
+            </form>
+            <br>
+            {% if mail_request_copy_sent %}
+              <p>{% trans "A copy of the PDF has been sent to your email address." %}</p>
+            {% endif %}
+          </div>
+          <a class="btn btn-primary" id="next_step_button">{% trans "Finish" %}</a>
+          <script>
+// For browsers without JavaScript, leave the button above visible so that the users
+// can continue to the last step
+// For browsers with JavaScript, hide the above button on page load
+document.getElementById("next_step_button").style["display"] = "none";
+          </script>
+        </div>
+      </div>
+    </div>
+{% endblock %}
