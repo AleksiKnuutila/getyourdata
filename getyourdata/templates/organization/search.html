@@ -13,34 +13,37 @@
           <div class="search-box">
             <p class="main-content">As the first step, select the organisation that has personal
             data about you. Type in the <strong>name of the organisation</strong> below.</p>
-            <div class="input-group search-form">
-              <input type="text" class="form-control input" id="search" placeholder="Organisation name..">
-              <span class="input-group-btn">
-                <button type="submit" class="btn btn-primary input">Search</button>
-              </span>
-            </div>
+            <form action="{% url 'organization:list_organizations' %}" method="get">
+              <div class="input-group search-form">
+                {% comment %}{% csrf_token %}{% endcomment %}
+                <input id="search" class="form-control input" type="text" name="search" placeholder="Organisation's name">
+                <span class="input-group-btn">
+                  <input type="submit" class="btn btn-primary input" value="Search">
+                </span>
+              </div>
+            </form>
+            {% comment %}
+              <form action="/organizations/" method="get" _lpchecked="1">
+                <div class="input-group search-form">
+                  <input type="text" class="form-control input" id="search" placeholder="Organisation name..">
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary input">Search</button>
+                  </span>
+                </div>
+              </form>
+            {% endcomment %}
           </div>
           <p class="main-content">The website focuses on <strong>organisations in the United
             Kingdom</strong>.
           We have {{ organizations_count }} entities in our database.
           The basis of our database is the <a href="https://ico.org.uk/about-the-ico/what-we-do/register-of-data-controllers/">ICO's
-          Register of Data Controllers</a>.</p>
+            Register of Data Controllers</a>.</p>
           <p class="main-content">Please note, if you want to make a Freedom of Information request,
           you should use a service such as <a
-            href="http://www.whatdotheyknow.com">WhatDoTheyKnow</a>.</p>
+             href="http://www.whatdotheyknow.com">WhatDoTheyKnow</a>.</p>
         </div>
       </div>
     </div>
   </div>
 
 {% endblock %}
-
-
-{% comment %}
-          <div class="form-group">
-            <form class="form-inline" action="{% url 'organization:list_organizations' %}" method="get">
-              {% comment %} {% csrf_token %} {% endcomment %}{% comment %}
-              <input type="text" class="form-control" name="search" size="35" placeholder="Organization's name">
-              <button type="submit" class="btn btn-default">Search</button>
-            </form>
-          </div>{% endcomment %}

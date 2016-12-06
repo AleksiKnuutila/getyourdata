@@ -61,12 +61,15 @@
     </div>
     <div class="row">
       <div class="pull-right collapse navbar-collapse navbar-form" id="search-navbar">
-        <div class="input-group hero-form">
-          <input type="text" class="form-control input" id="search" placeholder="Organisation name..">
-          <span class="input-group-btn">
-            <button type="submit" class="btn btn-primary input">Search</button>
-          </span>
-        </div>
+        <form action="{% url 'organization:list_organizations' %}" method="get">
+          <div class="input-group navbar-search-form">
+            {% comment %}{% csrf_token %}{% endcomment %}
+            <input id="search" class="form-control input" type="text" name="search" placeholder="Organisation's name">
+            <span class="input-group-btn">
+              <input type="submit" class="btn btn-primary input" value="Search">
+            </span>
+          </div>
+        </form>
       </div>
     </div><!--/.nav-collapse -->
   </div>
