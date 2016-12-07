@@ -11,50 +11,55 @@
         <div class="page-header">
           {# Translators: On the "list organizations" view #}
           <h1 class="pageheader">{% trans "Choose an organisation" %}</h1>
-          <div class="form-group">
-            <form action="{% url 'organization:list_organizations' %}" method="get">
-              {% csrf_token %}
-              <input id="search" type="text" name="search" size="35" placeholder="Organisation's name">
-  <input type="submit" value="Save">
-              </form>
-          </div>
+          <form action="{% url 'organization:list_organizations' %}" method="get">
+            <div class="input-group list-search-form">
+              {% comment %}{% csrf_token %}{% endcomment %}
+              <input id="search" class="form-control input" type="text" name="search" value="{{ search }}">
+              <span class="input-group-btn">
+                <input type="submit" class="btn btn-primary input" value="Search">
+              </span>
+            </div>
+          </form>
         </div>
-
       </div>
     </div>
 
     <div class="row">
-      {% comment %}
-        <div class="col-md-3">
-          {% include "organization/categories.html" %}
-        </div>
-      {% endcomment %}
+      <div class="col-md-12">
+        {% comment %}
+          <div class="col-md-3">
+            {% include "organization/categories.html" %}
+          </div>
+        {% endcomment %}
 
-      {% if organizations %}
-        <b>{{ org_count }} organisations in list</b>
-        <div id="organization-list">
-          {% for organization in organizations %}
-            <div class="organization-list-item">
-              <a class="organization-list-link" href="{% url 'organization:view_organization' organization.id %}">{{ organization.name }}</a>
-              <div class="organization-list-description">
-                Registered at {{ organization.dpa_registration_start_date }}
+        {% if organizations %}
+          <p class="main-content search-results"><strong>{{ org_count }} organisations found with search "{{ search }}"</strong></b>
+          <div id="organization-list">
+            {% for organization in organizations %}
+              <div class="organization-list-item">
+                <a class="organization-list-link" href="{% url 'organization:view_organization' organization.id %}">{{ organization.name }}</a>
+                <div class="organization-list-description">
+                  Registered at {{ organization.dpa_registration_start_date }}
+                </div>
               </div>
-            </div>
-          {% endfor %}
-          </form>
-          {% if show_pagination %}
-            {% bootstrap_pagination organizations url=pag_url %}
-          {% endif %}
-        </div>
-      {% else %}
-        <p>{% trans "No organisations yet." %}</p>
-        <div>
-          <a class="btn btn-primary" href="{% url "organization:new_organization" %}">{% trans "Add organization" %}</a>
-        </div>
-      {% endif %}
-      {% comment %} Turn off the javascript list mechanism for now.
-        {% include "organization/list_js.html" %}
-      {% endcomment %}
+            {% endfor %}
+            </form>
+            {% if show_pagination %}
+              {% bootstrap_pagination organizations url=pag_url extra=search_arg %}
+            {% endif %}
+          </div>
+        {% else %}
+          <p class="main-content" style="margin-top: 20px; margin-bottom: 100px;"><strong>{% trans "No organisations found with the search:" %} {{ search }}.</strong></p>
+          {% comment %}
+          <div>
+            <a class="btn btn-primary" href="{% url "organization:new_organization" %}">{% trans "Add organization" %}</a>
+          </div>
+          {% endcomment %}
+        {% endif %}
+        {% comment %} Turn off the javascript list mechanism for now.
+          {% include "organization/list_js.html" %}
+        {% endcomment %}
+      </div>
     </div>
   </div>
 {% endblock %}

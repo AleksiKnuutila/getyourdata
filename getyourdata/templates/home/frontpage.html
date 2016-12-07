@@ -10,77 +10,75 @@
 {% language lang_code %}
 
   <div class="hero-unit">
-
     <div class="container">
       <h1>Get your information from companies and the government</h1>
-      <form class="form-inline" action="/organizations/" method="get" _lpchecked="1">
-        <div class="form-group hero-box">
-          <p class="hero-box-text">Make a request for your personal data to any
-          organisation in the UK; by law they have to respond</p>
+      <div class="form-group hero-box">
+        <p class="hero-box-text">Make a request for your personal data to any
+        organisation in the UK; by law they have to respond</p>
+        <form class="form-inline" action="/organizations/" method="get" _lpchecked="1">
           <label for="search">Name of organisation</label>
           <div class="input-group hero-form">
-            <input type="text" class="form-control input-lg" id="search" placeholder="Islington Council..">
+            <input id="search" class="form-control input-lg" type="text" name="search" placeholder="Organisation's name">
             <span class="input-group-btn">
-              <button type="submit" class="btn btn-big btn-primary input-lg">Search</button>
+              <input type="submit" class="btn btn-primary input-lg" value="Search">
+            </span>
+          </div>
+        </form>
+      </div>
+      {% comment %}<p><a class="btn btn-primary btn-large">Learn more</a></p>{% endcomment %}
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading">How it works</h2>
+          <div class="section-subheading text-muted">
+            When companies or the government hold information about you,
+            you have the right to get a copy of it. We
+            help you in the process.
             </span>
           </div>
         </div>
-      </form>
-      {% comment %}<p><a class="btn btn-primary btn-large">Learn more</a></p>{% endcomment %}
-    </div>
-
-  </div>
-
-    <section id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">How it works</h2>
-                    <div class="section-subheading text-muted">
-                      When companies or the government hold information about you,
-                      you have the right to get a copy of it. We
-                      help you in the process.
-</span>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x row-spacing">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <span class="circle-text fa-stack-1x">1</span>
-                    </span>
-                    <h4 class="service-heading">Send a written request</h4>
-                    <p class="text-muted">Use this site to find the
-                    organisation and approach them by email or letter.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x row-spacing">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <span class="circle-text fa-stack-1x">2</span>
-                    </span>
-                    <h4 class="service-heading">Respond to organisation</h4>
-                    <p class="text-muted">The organisation will be in touch
-                    with you to check your identity.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x row-spacing">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <span class="circle-text fa-stack-1x">3</span>
-                    </span>
-                    <h4 class="service-heading">Leave feedback</h4>
-                    <p class="text-muted">Come back to the site and leave a
-                    record of what happened. This will help others make
-                    successful requests.</p>
-                </div>
-            </div>
-            <div style="margin-top: 42px" class="row">
-              <div class="col-lg-12 text-center">
-                <button type="button" class="btn btn-lg" id="info-button">Find out
-                  more about requesting your information</button>
-              </div>
-            </div>
+        <div class="row text-center">
+          <div class="col-md-4">
+            <span class="fa-stack fa-4x row-spacing">
+              <i class="fa fa-circle fa-stack-2x text-primary"></i>
+              <span class="circle-text fa-stack-1x">1</span>
+            </span>
+            <h4 class="service-heading">Send a written request</h4>
+            <p class="text-muted">Use this site to find the
+            organisation and approach them by email or letter.</p>
+          </div>
+          <div class="col-md-4">
+            <span class="fa-stack fa-4x row-spacing">
+              <i class="fa fa-circle fa-stack-2x text-primary"></i>
+              <span class="circle-text fa-stack-1x">2</span>
+            </span>
+            <h4 class="service-heading">Respond to organisation</h4>
+            <p class="text-muted">The organisation will be in touch
+            with you to check your identity.</p>
+          </div>
+          <div class="col-md-4">
+            <span class="fa-stack fa-4x row-spacing">
+              <i class="fa fa-circle fa-stack-2x text-primary"></i>
+              <span class="circle-text fa-stack-1x">3</span>
+            </span>
+            <h4 class="service-heading">Leave feedback</h4>
+            <p class="text-muted">Come back to the site and leave a
+            record of what happened. This will help others make
+            successful requests.</p>
+          </div>
         </div>
-    </section>
+        <div style="margin-top: 42px" class="row">
+          <div class="col-lg-12 text-center">
+            <button type="button" class="btn btn-lg" id="info-button">Find out
+              more about requesting your information</button>
+          </div>
+        </div>
+      </div>
+  </section>
 
 
 {% endlanguage %}

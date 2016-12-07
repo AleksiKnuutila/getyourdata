@@ -44,6 +44,8 @@ def list_organizations(request, tag=""):
     org_count = orgs.count()
     organizations = get_objects_paginator(page, orgs, orgs_per_page)
     show_pagination = orgs_per_page < org_count
+    # for pagination
+    search_arg = 'search='+search
 
     if request.POST.get("create_request", None) and len(org_ids) > 0:
         # User wants to create a request with selected organizations
@@ -56,6 +58,7 @@ def list_organizations(request, tag=""):
          'show_pagination': show_pagination,
          'tag': tag,
          'search': search,
+         'search_arg': search_arg,
          'org_ids': org_ids,
          'org_count': org_count,
          'pag_url': reverse("organization:list_organizations"),
