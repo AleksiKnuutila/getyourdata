@@ -15,7 +15,7 @@ from organization.forms import NewOrganizationForm, EditOrganizationForm
 from organization.forms import CommentForm
 from organization.utils import get_objects_paginator
 
-def search_organizations(request, tag=""):
+def search_form_organizations(request, tag=""):
     """
     Returns simple form for searching organizations
     """
@@ -34,8 +34,12 @@ def list_organizations(request, tag=""):
         orgs = Organization.objects.filter(verified=True,
                 tags__iregex=r"\y{0}\y".format(tag))
     elif search:
-        orgs = Organization.objects.filter(verified=True,
-                name__icontains=search)
+        if len(search) >= 4:
+            orgs = Organization.objects.filter(verified=True,
+                    name__icontains=search)
+        else:
+            messages.error(request, _("Please make a search using at least 4 characters."))
+            return redirect(reverse("organization:search_organization"))
     else:
         orgs = Organization.objects.filter(verified=True)
     orgs_per_page = settings.ORGANIZATIONS_PER_PAGE
