@@ -12,6 +12,8 @@ $base-font-colour: #333333;
 $link-colour: #265C83;
 $heading-colour: $base-darker;
 
+$highlight-background: #D4DBE3;
+
 $header-font: 'Droid Sans', sans-serif;
 $body-font: 'Open Sans', sans-serif;
 
@@ -160,10 +162,19 @@ button#info-button {
   color: $heading-colour;
   background-color: white;
   border-color: white;
-  font-weight: bold; }
+  font-weight: bold;
+  border-bottom: 0px;
+  }
+
+#bootstrap-overrides .panel.highlight-box {
+  margin-top: 20px;
+}
+#bootstrap-overrides .highlight-box > .panel-heading {
+  background-color: $highlight-background;
+}
 
 #bootstrap-overrides .panel {
-  color: #959595;
+  color: $base-font-colour;
   background-color: white;
   border-color: white; }
 
@@ -219,11 +230,15 @@ h2.subheader {
 }
 
 /* Search page */
-.search-box {
-    background-color: rgba(40, 76, 115, 0.2);
-    padding: 30px;
+#bootstrap-overrides .highlight-box {
+  background-color: $highlight-background;
+  /* background-color: rgba(40, 76, 115, 0.2); */
     /* margin-left: -30px; */
+}
+
+.search-box {
     margin-bottom: 55px;
+    padding: 30px;
     max-width: 600px;
 }
 .search-form {
@@ -463,3 +478,18 @@ ul.footer-links {
     float: right;
 }
 
+a.arrow-link:before {
+    content: "";
+    border-color: transparent black;
+    border-style: solid;
+    border-width: 0.42em 0 0.42em 0.55em;
+    display: block;
+    height: 0;
+    width: 0;
+    left: -1em;
+    top: 1.1em;
+    position: relative;
+}
+a.arrow-link {
+    margin-left: 1em;
+}
