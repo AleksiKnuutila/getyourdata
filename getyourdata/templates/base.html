@@ -23,6 +23,21 @@
         <link href="https://fonts.googleapis.com/css?family=Droid+Sans|Open+Sans:400,700" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <!-- self-hosted piwik on sandstorm.io -->
+        <script type="text/javascript">
+            var _paq = _paq || [];
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+              _paq.push(['setTrackerUrl',  'https://api-a68e1ea6b4c2ed8e77c5c4c07929c384.oasis.sandstorm.io']);
+              _paq.push(['setSiteId', 1]);
+              _paq.push(['setApiToken', 'swaTk3is1tHTxQc0ST_Z_GBOD6p7yKIliSkvkTQirK1']);
+              var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+              g.type='text/javascript'; g.async=true; g.defer=true; g.src='https://0taaaeqimfj3d1v7w4w7.oasis.sandstorm.io/embed.js'; s.parentNode.insertBefore(g,s);
+            })();
+        </script>
+        <!-- End Piwik Code -->
+
         <title>{% block title %}{% current_site %}{% endblock %}</title>
         {% block extrahead %}
         {% endblock extrahead %}
