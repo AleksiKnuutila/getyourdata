@@ -81,13 +81,13 @@
       </div>
       <div class="col-md-8 col-sm-7">
         {% if organization.has_description %}
-          <h2>{% trans "Description" %}</h2>
+          <h2 class="org-heading">{% trans "Description" %}</h2>
           <p>
           {{ organization.plaintext_description }}
           </p>
           <hr>
         {% endif %}
-        <h2>{% trans "Contact information" %}</h2>
+        <h2 class="org-heading">{% trans "Contact information" %}</h2>
         {% if not organization.verified %}
           <div class="alert alert-danger">
             <strong>{% trans "Unverified contact details" %}</strong><br>
@@ -99,7 +99,7 @@
         {% if organization.accepts_mail or organization.accepts_email %}
           {% if organization.accepts_mail %}
             <p>{% trans "Data requests can be sent in mail to the following address" %}</p>
-            <p style="font-weight: bold; font-family: monospace;">{% if organization.address_line_one %}{{ organization.address_line_one }}<br>{% endif %}
+            <p class="contact-details">{% if organization.address_line_one %}{{ organization.address_line_one }}<br>{% endif %}
             {% if organization.address_line_two %}{{ organization.address_line_two }}<br>{% endif %}
             {% if organization.postal_code %}{{ organization.postal_code }}<br>{% endif %}
             {% if organization.country %}{{ organization.country }}<br>{% endif %}</p>
@@ -125,7 +125,7 @@
           <a class="organization-view-link arrow-link" href="{{ organization.get_wdtk_link }}">Freedom of Information requests to {{ organization.name }}</a>
         {% endif %}
         {% if organization.get_opencorporates_link %}
-          <a class="organization-view-link arrow-link" href="{{ organization.get_opencorporates_link }}">{{ organization.name }} on OpenCorporates</a>
+          <a class="organization-view-link arrow-link" href="{{ organization.get_opencorporates_link }}">Information on {{ organization.name }} as a company on OpenCorporates</a>
         {% endif %}
         {% comment %}
           {% if organization.get_ico_link %}
@@ -135,7 +135,7 @@
         {% endcomment %}
         <hr>
         {% if organization.has_data_processing_description %}
-          <h2>{% trans "How they use personal data" %}</h2>
+          <h2 class="org-heading">{% trans "How they use personal data" %}</h2>
           <p>
           {% for row in organization.data_processing_description_displayed %}
             {% if row|slice:":1" == '#' %}
@@ -167,7 +167,7 @@
         {% endif %}
       {% endif %}
       <hr>
-      <h2>{% trans "Received comments" %}</h2>
+      <h2 class="org-heading">{% trans "Received comments" %}</h2>
       {% if comments %}
         <table class="table table-striped">
           <tbody>

@@ -262,7 +262,7 @@ def direct_pdf_request(request, org_id=None):
 
     return render(request, "data_request/direct_pdf_request.html", {
         "form": form,
-        "organization": organization,
+        "organization": organization[0],
         "pdf_data": pdf_data,
         "org_id": org_id,
     })

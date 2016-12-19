@@ -2,7 +2,7 @@
 */
 
 $base-colour: #5688C0;
-$base-darker: #284C73; /* rgb(40,76,115) */
+$base-darker: #284C73;
 $warm-contrast: #CA766F;
 $cold-contrast: #808D31;
 $cold-contrast-darker: #6A732E;
@@ -197,6 +197,16 @@ button#info-button {
 .main-content div {
     margin-bottom: 1em;
 }
+.general-box {
+  margin-bottom: 55px;
+  margin-top: 35px;
+  padding: 30px;
+  max-width: 600px;
+}
+.contact-details {
+  font-weight: bold;
+  font-family: monospace;
+}
 
 /* FAQ list */
 
@@ -293,12 +303,13 @@ h2.subheader {
   display: block;
 }
 
-/* link colours */
+/* link colours coll */
 
 #bootstrap-overrides a {
   color: $link-colour;
 }
-#bootstrap-overrides a:visited { color: #265C83; }
+#bootstrap-overrides a:visited { color: $link-colour; }
+#bootstrap-overrides a.btn:visited { color: #fff; }
 #bootstrap-overrides a:hover   { color: $base-darker; }
 #bootstrap-overrides a:active  {
   transition: color .3s;
@@ -414,6 +425,9 @@ h2.subheader {
     margin-bottom: 0px;
     margin-top: 24px;
 }
+h2.org-heading {
+    margin-bottom: 28px;
+}
 
     /* Large desktop */
 @media (min-width: 1200px) { }
@@ -509,4 +523,5 @@ a.arrow-link:before {
 }
 a.arrow-link {
     margin-left: 1em;
+    display: block;
 }

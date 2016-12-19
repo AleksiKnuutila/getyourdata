@@ -6,33 +6,21 @@
 {% block content %}
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
-          <h3><span class="glyphicon glyphicon-info-sign"></span> {% trans "Print mail requests" %}</h3>
-          <div class="alert alert-warning">
-            <strong>
-              {% blocktrans count counter=mail_organizations|length trimmed %}
-                One request needs to be printed.
-                {% plural %}
-                {{ counter }} requests need to be printed.
-              {% endblocktrans %}
-            </strong>
-            <br>
-            <p>{% blocktrans trimmed %}
-              The following organisations require that data requests are sent by mail:
-            {% endblocktrans %}</p>
-            <ul>
-              {% for organization in mail_organizations %}
-                <li>{{ organization.name }}</li>
-              {% endfor %}
-            </ul>
-            <br>
+        <div class="col-sm-9 col-md-7">
+          <h1 class="pageheader">{% trans "Fill in and send written request" %}</h1>
+          <div class="main-content">
             <p>
             {% blocktrans %}
-              You can send data requests to the listed organisations by mail. The following document
-              contains the required pages. If your printer supports two-sided printing, the print-out
-              can be folded, stapled and mailed as-is (please consult your printer's user guide for
-              two-sided printing instructions). If using one-sided printing the address pages are
-              printed on separate papers.
+              You can send a written request for your personal data to {{ organization }}. See <a href="/faq">the FAQ</a> for more information.
+            {% endblocktrans %}
+            <p>
+          </div>
+          <div class="general-box highlight-box">
+            <p class="main-content">
+            {% blocktrans %}
+            We have prepared a PDF file for with the text you need for the
+            request. The PDF also has fields where you can input the
+            information that you need to add to your request.
             {% endblocktrans %}
             </p>
             <br>
@@ -40,14 +28,51 @@
               {% csrf_token %}
               {% bootstrap_form form|hide_form %}
               <input id="submit_form" style="display: none;" type="submit" value="submit"/>
-              <a class="btn btn-xl btn-success" href="data:application/pdf;base64,{{ pdf_data }}"
-                                                target="_blank" download="request.pdf" onclick="$('#submit_form').click()"><span
-                                                                                       class="glyphicon glyphicon-download-alt"></span> {% trans "Download PDF" %}</a>
+              <a class="btn btn-xl btn-primary" href="data:application/pdf;base64,{{ pdf_data }}"
+                                                target="_blank" download="subject_access_request.pdf">
+                <span class="glyphicon glyphicon-download-alt"></span> {% trans "Download PDF" %}
+              </a>
             </form>
             <br>
-            {% if mail_request_copy_sent %}
-              <p>{% trans "A copy of the PDF has been sent to your email address." %}</p>
-            {% endif %}
+          </div>
+          <div class="main-content">
+            <p>
+            The parts that you need to fill in for your request are the
+            following:
+            </p>
+            <ul>
+            <li>Personal information, such as your name and address, that
+              allows the organisation to identify you</li>
+            <li>A description of the information you want to access</li>
+            <li>Your signature (you may sign by writing your name on the
+              computer)</li>
+            </ul>
+            <p style="margin-top: 30px;">
+            You may send either save the PDF and e-mail it, or print it and
+            send it in the post. Here is the post address that we have for the
+            organisation:
+            </p>
+            <p class="contact-details">
+            {% if organization.address_line_one %}{{ organization.address_line_one }}<br>{% endif %}
+            {% if organization.address_line_two %}{{ organization.address_line_two }}<br>{% endif %}
+            {% if organization.postal_code %}{{ organization.postal_code }}<br>{% endif %}
+            {% if organization.country %}{{ organization.country }}<br>{% endif %}</p>
+          {% comment %}
+          {% if organization.accepts_email %}
+            <p>{% trans "Data requests by email are sent to the following email address" %}</p>
+            {# We shouldn't probably show the email address in plain-text as that makes it very easy for spam bots to crawl for email addresses #}
+            {# Maybe use a library or a third-party service like one provided by Cloudflare? #}
+            <a href="{{ organization.email_address }}">{{ organization.email_address }}</a>
+          {% endcomment %}
+          </div>
+          <div class="general-box highlight-box">
+            <p class="main-content">
+            After you have been in contact with the organization, please do
+            come and report your experience on GetYourData.org. This will help
+            others make successful requests. Bookmark the link below for
+            leaving a comment.
+            <a class="arrow-link" href="{% url 'organization:view_organization' organization.id %}">{{ organization }} on GetYourData.org</a>
+            </p>
           </div>
           <a class="btn btn-primary" id="next_step_button">{% trans "Finish" %}</a>
           <script>
