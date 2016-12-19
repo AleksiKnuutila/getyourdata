@@ -9,6 +9,7 @@ from getyourdata.models import BaseModel
 from data_request.services import convert_html_to_pdf
 from organization.models import Organization, AuthenticationField
 
+import datetime
 import uuid
 
 
@@ -161,7 +162,7 @@ class DataRequest(object):
 
     def contact_to_text(self, html=False):
         """
-        Return the contact information part of the requset in HTML
+        Return the contact information part of the request in HTML
 
         :html: If True, return a HTML-formatted document,
                otherwise return the content in plain-text
@@ -178,7 +179,7 @@ class DataRequest(object):
             template, {
                 "data_request": self,
                 "organization": self.organization,
-                "current_datetime": timezone.now()
+                "current_datetime": datetime.date.today().strftime('%d, %b %Y')
             })
 
 

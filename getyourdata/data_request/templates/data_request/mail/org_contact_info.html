@@ -4,7 +4,7 @@
     <title>{% trans "Subject access request: " %}{{ data_request.organization.name }}</title>
     <style>
 body {
-  font-size: 12px;
+  font-size: 16px;
   font-family: Verdana;
   margin-left: 100px;
 }
@@ -76,12 +76,13 @@ body {
         <p>{{ current_datetime }}</p>
       </div>
 
-      <h1>Recipient:</h1>
+      <h1>To recipient:</h1>
       <p>{{ organization.name }}</p>
       <p>{{ organization.address_line_one }}</p>
       <p>{{ organization.address_line_two }}</p>
       <p>{{ organization.postal_code }}</p>
       <p>{{ organization.country }}</p>
+      <br/>
 
       <p>{% trans "ICO Registration Number:" %} {{organization.get_ico_identifier }}</p>
 
