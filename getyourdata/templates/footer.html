@@ -16,13 +16,13 @@
       <div class="col-md-5">
         <div class="col-sm-3 col-md-4 pad-top text-center" style="padding: 0px;">
           <ul class="footer-links">
-            <li><a href="/search">Make a request</a></li>
-            <li><a href="/faq">Help</a></li>
+            <li><a href="{% url 'organization:search_organization' %}">Make a request</a></li>
+            <li><a href="{% url 'faq' %}">Help</a></li>
           </ul>
         </div>
         <div class="col-sm-6 col-md-5 pad-top text-center" style="padding: 0px;">
           <ul class="footer-links">
-            <li><a href="/about">About us</a></li>
+            <li><a href="{% url 'django.contrib.flatpages.views.flatpage' url='about/' %}">About us</a></li>
             <li><a href="/privacy">Privacy and cookies</a></li>
             <li><a href="https://github.com/AleksiKnuutila/getyourdata">Github</a></li>
           </ul>
