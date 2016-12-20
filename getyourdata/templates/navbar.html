@@ -35,7 +35,7 @@
           {% get_current_language as current_language %}
           {% get_flatpages as flatpages %}
 
-          <li><a class="navbar-link" href="{% url 'data_request:request_data' %}">{% trans "Make a request" %}</a></li>
+          <li><a class="navbar-link" href="{% url 'organization:search_organization' %}">{% trans "Make a request" %}</a></li>
           <li><a class="navbar-link" href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
           <li><a class="navbar-link" href="{% url 'django.contrib.flatpages.views.flatpage' url='about/' %}">{% trans "About" %}</a></li>
 

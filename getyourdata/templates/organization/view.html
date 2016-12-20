@@ -32,7 +32,7 @@
               Does this organisation have information about you? You can
               request a copy of it.
             {% endblocktrans %}</p>
-            <a class="btn btn-primary input" href="{% url "data_request:request_data" organization.id %}">{% trans "Create request" %}</a>
+            <a class="btn btn-primary input" href="{% url "data_request:direct_pdf_request" organization.id %}">{% trans "Create request" %}</a>
           </div>
         </div>
         <div class="panel panel-warning">
@@ -67,6 +67,7 @@
             </form>
           </div>
         </div>
+        {% comment %}
         <div class="panel panel-info">
           <div class="panel-heading"><span class="glyphicon glyphicon-wrench"></span> {% trans "Update details" %}</div>
           <div class="panel-body">
@@ -78,6 +79,7 @@
             <a class="btn btn-primary input" href="{% url "organization:edit_organization" organization.id %}">{% trans "Update details" %}</a>
           </div>
         </div>
+      {% endcomment %}
       </div>
       <div class="col-md-8 col-sm-7">
         {% if organization.has_description %}
@@ -99,7 +101,9 @@
         {% if organization.accepts_mail or organization.accepts_email %}
           {% if organization.accepts_mail %}
             <p>{% trans "Data requests can be sent in mail to the following address" %}</p>
-            <p class="contact-details">{% if organization.address_line_one %}{{ organization.address_line_one }}<br>{% endif %}
+            <p class="contact-details">
+            {{ organization.name }}<br>
+            {% if organization.address_line_one %}{{ organization.address_line_one }}<br>{% endif %}
             {% if organization.address_line_two %}{{ organization.address_line_two }}<br>{% endif %}
             {% if organization.postal_code %}{{ organization.postal_code }}<br>{% endif %}
             {% if organization.country %}{{ organization.country }}<br>{% endif %}</p>

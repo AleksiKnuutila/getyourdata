@@ -90,6 +90,7 @@ $body-font: 'Open Sans', sans-serif;
 #bootstrap-overrides a.navbar-frontpage-link {
     color: #fff;
     font-size: 18px;
+    margin-top: 14px;
 }
 
 #bootstrap-overrides a.navbar-frontpage-link:visited {
@@ -303,7 +304,10 @@ h2.subheader {
   display: block;
 }
 
-/* link colours coll */
+/* link styling */
+.main-content a {
+  text-decoration: underline
+}
 
 #bootstrap-overrides a {
   color: $link-colour;
@@ -492,7 +496,7 @@ p.footer {
 
 ul.footer-links {
     text-align: left;
-    text-decoration: underline;
+    /* text-decoration: underline; */
     padding-left: 0px;
 }
 

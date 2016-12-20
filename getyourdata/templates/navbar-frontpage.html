@@ -43,7 +43,7 @@
                 {% endfor %}
               {% endcomment %}
                 {% comment %}<li><a href="{% url 'organization:list_organizations' %}">{% trans "Organizations" %}</a></li>{% endcomment %}
-                <li><a class="navbar-frontpage-link" href="{% url 'data_request:request_data' %}">{% trans "Make a request" %}</a></li>
+                <li><a class="navbar-frontpage-link" href="{% url 'organization:search_organization' %}">{% trans "Make a request" %}</a></li>
                 <li><a class="navbar-frontpage-link" href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
                 <li><a class="navbar-frontpage-link" href="{% url 'django.contrib.flatpages.views.flatpage' url='about/' %}">{% trans "About" %}</a></li>
 

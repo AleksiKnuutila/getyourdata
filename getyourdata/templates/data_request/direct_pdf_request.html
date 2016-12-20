@@ -53,6 +53,7 @@
             organisation:
             </p>
             <p class="contact-details">
+            {{ organization.name }}<br>
             {% if organization.address_line_one %}{{ organization.address_line_one }}<br>{% endif %}
             {% if organization.address_line_two %}{{ organization.address_line_two }}<br>{% endif %}
             {% if organization.postal_code %}{{ organization.postal_code }}<br>{% endif %}
